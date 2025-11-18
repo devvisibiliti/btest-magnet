@@ -12,6 +12,17 @@ const bgSchema = new Mongoose.Schema(
             type:String,
             required:true
 
+        },
+        imageUrl:{
+            type:String,
+        },
+        imagePublicId:{
+            type:String
+
+        },
+        createdAt:{
+            type:Date,
+            default:Date.now
         }
     }
 )
@@ -19,3 +30,5 @@ const bgSchema = new Mongoose.Schema(
 const G = Mongoose.model('G',bgSchema)
 
 export default G
+
+

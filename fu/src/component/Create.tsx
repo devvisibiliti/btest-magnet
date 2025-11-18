@@ -9,11 +9,12 @@ interface PostForm {
 
 interface ApiResponse {
   message?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function Create() {
   const [form, setForm] = useState<PostForm>({ title: "", description: "" });
+  const [image, setImage] = useState<File | null>(null)
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Create() {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const response = await fetch("/check", {
+        const response = await fetch("http://localhost:5300/ad/verify", {
           method: "GET",
           credentials: "include", // send cookies if auth uses them
         });
@@ -42,31 +43,42 @@ function Create() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleImage = (e:ChangeEvent<HTMLInputElement>)=>{
+    setImage(e.target.files ? e.target.files[0]:null)
+
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     try {
-      const response = await fetch("/create", {
+      const formData = new FormData()
+      formData.append("title",form.title)
+      formData.append("description", form.description)
+      if(image) formData.append("image", image)
+      const response = await fetch("http://localhost:5300/api/gp", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
         credentials: "include", // include cookies if your server uses auth cookies
-        body: JSON.stringify(form),
+        body: formData,
       });
 
-      if (!response.ok) {
-        const errorData: ApiResponse = await response.json();
-        setMessage(errorData.message || "Failed to create");
-        setLoading(false);
-        return;
-      }
-
       const data: ApiResponse = await response.json();
+
+if (!response.ok) {
+    setMessage(data.message || "Failed to create");
+    setLoading(false);
+    return;
+}
+
+   
       setMessage(data.message || "Created successfully");
       setForm({ title: "", description: "" });
+      setImage(null);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -98,6 +110,9 @@ function Create() {
             required
             style={{ width: "100%", padding: "8px", minHeight: "100px" }}
           />
+        </div>
+        <div style={{ marginBottom: "10px" }}>
+          <input type="file" name="image" onChange={handleImage} />
         </div>
         <button type="submit" disabled={loading} style={{ padding: "10px 20px" }}>
           {loading ? "Creating..." : "Create"}

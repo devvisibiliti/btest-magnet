@@ -24,10 +24,11 @@ app.use(cookieParser())
 //   res.status(201).json({ ok: true, received: req.body });
 // });
 
+app.use("/api", router)
+app.use("/ad", adRouter)
 
 
-
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5300;
 app.listen(PORT, () => console.log(`App is listen ${PORT}`));
 
 
@@ -40,8 +41,7 @@ mongoose.connect(process.env.MONGODB_URI).then(()=>{
 //     console.log(`${req.method} ${req.orginalUrl}`)
 //     next()
 // })
-app.use("/api", router)
-app.use("/ad", adRouter)
+
 
 
 
