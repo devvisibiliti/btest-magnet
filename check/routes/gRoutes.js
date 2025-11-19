@@ -12,7 +12,29 @@ import del from "../controllers/delController.js";
 
 
 const router = Router();
-router.post("/gp",VerifyUser,upload.single("image"),validateCreate, crBg);
+// routes/gRoutes.js (only change the /gp route during debug)
+router.post(
+  "/gp",
+  (req, res, next) => {
+    console.log("ROUTE HIT: /gp - before VerifyUser");
+    next();
+  },
+  VerifyUser,
+  (req, res, next) => {
+    console.log("ROUTE: after VerifyUser, before multer");
+    next();
+  },
+  upload.single("image"),
+  (req, res, next) => {
+    console.log("ROUTE: after multer; req.file:", !!req.file);
+    console.log("req.body keys:", Object.keys(req.body));
+    next();
+  },
+  validateCreate,
+  crBg
+);
+
+router.post("/gp",VerifyUser,validateCreate, crBg);
 router.get("/ge", crGe)
 router.get("/ge/:id",validateId, crGi)
 router.put("/ge/update/:id", upi)

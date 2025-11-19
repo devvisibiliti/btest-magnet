@@ -1,5 +1,12 @@
+// index.js
 import dotenv from "dotenv";
 dotenv.config();
+console.log("CLOUDINARY ENV LOADED:", {
+  NAME: process.env.CLOUDINARY_NAME,
+  KEY: process.env.CLOUDINARY_KEY,
+  SECRET: process.env.CLOUDINARY_SECRET ? "SET" : "MISSING"
+});
+
 
 import express from "express";
 import mongoose from "mongoose";
@@ -9,39 +16,48 @@ import router from "./routes/gRoutes.js";
 import adRouter from "./routes/adRoutes.js";
 import cookieParser from "cookie-parser";
 
-
-const app = express()
+const app = express();
 
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials: true
-}))
-app.use(express.json())
-app.use(cookieParser())
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 
-// app.post("/api/echo", (req, res) => {
-//   console.log("Echo body ->", req.body);
-//   res.status(201).json({ ok: true, received: req.body });
-// });
+app.use(express.json());
+app.use(cookieParser());
 
-app.use("/api", router)
-app.use("/ad", adRouter)
+// Simple incoming request logger (place BEFORE routes)
+app.use((req, res, next) => {
+  console.log("INCOMING:", req.method, req.url);
+  next();
+});
 
+// mount your routers
+app.use("/api", router);
+app.use("/ad", adRouter);
+
+// Basic health route (helpful to check server)
+app.get("/health", (req, res) => res.json({ ok: true }));
+
+// 404 handler for unmatched API routes (returns JSON)
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api") || req.path.startsWith("/ad")) {
+    return res.status(404).json({ error: "Not found" });
+  }
+  next();
+});
+
+// Global error handler (must be AFTER routes)
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR:", err && (err.stack || err));
+  // If headers already sent, delegate to default handler
+  if (res.headersSent) return next(err);
+  res.status(500).json({ error: "Internal server error" });
+});
 
 const PORT = process.env.PORT || 5300;
-app.listen(PORT, () => console.log(`App is listen ${PORT}`));
+app.listen(PORT, () => console.log(`App is listening on ${PORT}`));
 
-
-
-mongoose.connect(process.env.MONGODB_URI).then(()=>{
-    console.log("mon is connected")
-})
-
-// app.use((req, res, next)=>{
-//     console.log(`${req.method} ${req.orginalUrl}`)
-//     next()
-// })
-
-
-
-
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("mongo is connected"))
+  .catch(err => console.error("mongo connect error:", err));

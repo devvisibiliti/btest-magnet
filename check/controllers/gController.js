@@ -1,29 +1,27 @@
-import G from '../models/gModel.js'
+import G from "../models/gModel.js";
 
-const crBg = async (req, res, next) => {
+const crBg = async (req, res) => {
   try {
-    console.log("Uploaded file:", req.file);
+    const { title, description, imageUrl } = req.body;
 
-    const { title, description } = req.body;
-    
-    const imageUrl = req.file?.path || req.file?.url;   // ✔ Cloudinary URL
-    const imagePublicId = req.file?.filename;           // ✔ Cloudinary public_id
+    if (!title || !description) {
+      return res.status(400).json({ error: "Title and description required" });
+    }
 
-    const gc = await G.create({
+    // imageUrl may be empty if the user didn't upload an image
+    const post = await G.create({
       title,
       description,
-      imageUrl,
-      imagePublicId,
+      imageUrl: imageUrl || "",
     });
 
     return res.status(200).json({
-      message: "g is ok",
-      data: gc,
+      message: "Post created successfully",
+      data: post,
     });
-
   } catch (err) {
-    console.error(err);
-    next(err);
+    console.error("Create Post Error:", err);
+    return res.status(500).json({ error: "Server error" });
   }
 };
 
