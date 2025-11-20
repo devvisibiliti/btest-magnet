@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom'
 
 const API_BASE = import.meta.env.VITE_API_BASE
 
-export default function Sid(){
+export default function SinglePostEdit(){
 
     const {id} = useParams()
     interface CollType {

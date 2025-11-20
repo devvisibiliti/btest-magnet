@@ -1,14 +1,13 @@
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-
-// Firebase imports
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase";   // <-- make sure this path is correct
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 interface PostForm {
   title: string;
-  description: string;
+  description: string; // HTML from React Quill
 }
 
 interface ApiResponse {
@@ -22,6 +21,9 @@ function Create() {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const CLOUD_NAME = "djd5oi6b1";
+  const UPLOAD_PRESET = "blog_unsigned";
 
   useEffect(() => {
     async function checkAuth() {
@@ -39,12 +41,34 @@ function Create() {
     checkAuth();
   }, [navigate]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+const quillRef = useRef(null);
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     setImage(e.target.files ? e.target.files[0] : null);
+  };
+
+  // --------------------------
+  // CLOUDINARY IMAGE UPLOAD
+  // --------------------------
+  const uploadToCloudinary = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+    return data.secure_url; // this is the image URL
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -55,21 +79,17 @@ function Create() {
     try {
       let imageUrl = "";
 
-      // 1️⃣ Upload image to Firebase
       if (image) {
-        const imgRef = ref(storage, `posts/${Date.now()}-${image.name}`);
-        await uploadBytes(imgRef, image);
-        imageUrl = await getDownloadURL(imgRef);
+        imageUrl = await uploadToCloudinary(image);
       }
 
-      // 2️⃣ Send data to backend (NO multer needed)
       const response = await fetch("http://localhost:5300/api/gp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },  // sending JSON now
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
           title: form.title,
-          description: form.description,
+          description: form.description, // HTML from Quill editor
           imageUrl,
         }),
       });
@@ -93,8 +113,36 @@ function Create() {
     }
   };
 
+  // --------------------------
+  // REACT QUILL TOOLBAR SETTINGS
+  // --------------------------
+  const modules = {
+  toolbar: {
+    container: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      ["clean"],
+    ],
+  },
+};
+
+
+
+ const formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "list",
+  "bullet",
+  "link",
+  "image",
+];
+
   return (
-    <div style={{ maxWidth: "500px", margin: "auto" }}>
+    <div style={{ maxWidth: "650px", margin: "auto" }}>
       <h2>Create Post</h2>
 
       <form onSubmit={handleSubmit}>
@@ -109,16 +157,21 @@ function Create() {
           />
         </div>
 
-        <div style={{ marginBottom: "10px" }}>
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={form.description}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px", minHeight: "100px" }}
-          />
-        </div>
+        {/* ---------------------------- */}
+        {/*  REACT QUILL EDITOR HERE     */}
+        {/* ---------------------------- */}
+        <div style={{ marginBottom: "20px" }}>
+  <ReactQuill
+    ref={quillRef}
+    theme="snow"
+    value={form.description}
+    onChange={(value) => setForm({ ...form, description: value })}
+    modules={modules}
+    formats={formats}
+    style={{ height: "250px", marginBottom: "40px" }}
+  />
+</div>
+
 
         <div style={{ marginBottom: "10px" }}>
           <input type="file" name="image" onChange={handleImage} />
@@ -130,7 +183,12 @@ function Create() {
       </form>
 
       {message && (
-        <p style={{ marginTop: "10px", color: message.includes("success") ? "green" : "red" }}>
+        <p
+          style={{
+            marginTop: "10px",
+            color: message.includes("success") ? "green" : "red",
+          }}
+        >
           {message}
         </p>
       )}

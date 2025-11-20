@@ -13,7 +13,7 @@ type Item = {
     description: string;
 };
 
-export default function Id() {
+export default function PostsEditPage() {
     const [value, setValue] = useState<Item[]>([]);
 
     useEffect(()=>{
@@ -31,12 +31,12 @@ export default function Id() {
         <ul>
             {value.map(item => (
                 <li key={item._id}>
-                    <Link to={`/ge/${item._id}`}>{item.title}</Link>
+                    <Link to={`/post-edit/${item._id}`}>{item.title}</Link>
                     <br />
-                    <Link to={`/ge/${item._id}`}>{item.description}</Link>
+                    <Link to={`/post-edit/${item._id}`}>{item.description}</Link>
                     <br />
                     <button>
-                        <Link to={`/ge/${item._id}`}>Edit</Link>
+                        <Link to={`/post-edit/${item._id}`}>Edit</Link>
                     </button>
                 </li>
             ))}
