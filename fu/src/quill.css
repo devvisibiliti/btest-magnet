@@ -3,7 +3,9 @@
 }
 
 .quill-wrapper .ql-editor {
-  min-height: 250px;
+min-height: 250px;
   max-height: 400px;
   overflow-y: auto;
-  line-height: normal !important; /* prevents entire text turning into heading*
+  line-height: normal !important; 
+}
+  
