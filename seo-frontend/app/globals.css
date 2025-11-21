@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -13,8 +13,8 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
-    --foreground: #ededed;
+    --background: #170c0c;
+    --foreground: #110b0b;
   }
 }
 body {
@@ -24,13 +24,13 @@ body {
 }
 
 main {
-  padding: 20px;
+  padding: 0;
 }
 
-a {
+/* a {
   color: blue;
   text-decoration: none;
-}
+} */
 
 a:hover {
   text-decoration: underline;
@@ -50,4 +50,28 @@ a:hover {
 .animate-slideLeft {
   animation: slideLeft 0.3s ease-out;
 }
+
+/* Hide scrollbar this is youtube video section*/
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth infinite marquee animation */
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: scroll-marquee 40s linear infinite;
+}
+
 

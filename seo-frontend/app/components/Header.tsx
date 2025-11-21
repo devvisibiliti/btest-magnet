@@ -32,7 +32,7 @@ export default function Header() {
             <Link href="/">
               <Image src="/logo.png" alt="Logo" width={45} height={45} />
             </Link>
-            <span className="text-xl font-bold hidden sm:block">YourBrand</span>
+            <span className="text-xl font-bold hidden sm:block">Magnetronix</span>
           </div>
 
           {/* CENTER: DESKTOP MENU */}
