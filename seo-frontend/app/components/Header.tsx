@@ -1,167 +1,204 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaFacebook, FaInstagram, FaTwitter, FaMoon, FaSun } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
+import { FaMoon, FaSun } from "react-icons/fa";
+
+// ----- MEGA MENU DATA -----
+const productMenu = [
+  {
+    title: "Raw Magnetic Materials",
+    image: "/categories/raw.jpg",
+    links: [
+      { name: "Ferrite", href: "/products/ferrite" },
+      { name: "NdFeB", href: "/products/ndfeb" },
+      { name: "SmCo", href: "/products/smco" },
+    ],
+  },
+  {
+    title: "Magnetic Systems",
+    image: "/categories/tap1.png",
+    links: [
+      { name: "Magnetic Hooks", href: "/products/hooks" },
+      { name: "Lifting Magnets", href: "/products/lifters" },
+      { name: "Magnetic Sweepers", href: "/products/sweepers" },
+    ],
+  },
+  {
+    title: "Magnetic Separation",
+    image: "/categories/separation.jpg",
+    links: [
+      { name: "Grate Magnets", href: "/products/grate" },
+      { name: "Drum Separators", href: "/products/drum" },
+      { name: "Magnetic Filters", href: "/products/filters" },
+    ],
+  },
+  
+];
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
   const [dark, setDark] = useState(false);
-
-  // DARK MODE HANDLER
-  useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [dark]);
+  const [openMobile, setOpenMobile] = useState(false);
+  const [activeMega, setActiveMega] = useState(false);
 
   return (
     <>
-      {/* HEADER */}
-      <header className="sticky top-0 z-50 bg-white dark:bg-white dark:text-dark shadow-md">
+      {/* MAIN HEADER */}
+      <header className="sticky top-0 z-50 bg-white shadow-md dark:bg-black dark:text-white">
         <div className="container mx-auto flex items-center justify-between py-4 px-4">
 
-          {/* LEFT: LOGO IMAGE */}
-          <div className="flex items-center gap-2">
-            <Link href="/">
-              <Image src="/logo.png" alt="Logo" width={45} height={45} />
-            </Link>
-            <span className="text-xl font-bold hidden sm:block">Magnetronix</span>
-          </div>
+          {/* LOGO */}
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Logo" width={45} height={45} />
+            <span className="font-bold text-xl hidden md:block">Magnetronix</span>
+          </Link>
 
-          {/* CENTER: DESKTOP MENU */}
-          <nav className="hidden md:flex gap-8 text-lg font-medium items-center">
+          {/* DESKTOP NAV */}
+          <nav className="hidden md:flex gap-8 text-lg items-center font-medium">
+
             <Link href="/" className="hover:text-blue-600">Home</Link>
 
-            {/* DROPDOWN MENU */}
-            <div className="relative">
-              <button
-                onClick={() => setDropdown(!dropdown)}
-                className="hover:text-blue-600"
-              >
-                Products ▼
-              </button>
+            {/* MEGA MENU TRIGGER */}
+            <div
+              className="relative"
+              onMouseEnter={() => setActiveMega(true)}
+              onMouseLeave={() => setActiveMega(false)}
+            >
+              <button className="hover:text-blue-600">Products ▼</button>
 
-              {dropdown && (
-                <div
-                  className="absolute bg-white dark:bg-gray-800 shadow-lg mt-2 rounded-md p-4 flex flex-col gap-3 w-40 z-50"
-                  onMouseLeave={() => setDropdown(false)}
+              {/* MEGA MENU */}
+              {activeMega && (
+  <div className="absolute left-0 bg-white dark:bg-white-200 shadow-xl p-6 rounded-lg mt-2 z-50 min-w-[700px]">
+
+    {/* Grid – 1 column, but each item uses 2 rows */}
+    <div className="grid grid-cols-2 gap-4">
+
+      {productMenu.map((cat, index) => (
+        <div key={index} className="flex items-start gap-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+
+          {/* Small Category Image */}
+          <Image
+            src={cat.image}
+            alt={cat.title}
+            width={55}
+            height={55}
+            className="rounded-md object-cover"
+          />
+
+          {/* Category Text */}
+          <div className="flex flex-col">
+            <p className="font-semibold">{cat.title}</p>
+
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 mt-1">
+              {cat.links.map((l, idx) => (
+                <Link
+                  key={idx}
+                  href={l.href}
+                  className="text-sm hover:text-blue-500 whitespace-nowrap"
                 >
-                  <Link href="/products/magnet" className="hover:text-blue-600">Magnet</Link>
-                  <Link href="/products/posters" className="hover:text-blue-600">Posters</Link>
-                  <Link href="/products/custom" className="hover:text-blue-600">Custom Products</Link>
-                </div>
-              )}
+                  {l.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      ))}
+
+    </div>
+  </div>
+)}
+
             </div>
 
             <Link href="/about" className="hover:text-blue-600">About</Link>
             <Link href="/contact" className="hover:text-blue-600">Contact</Link>
           </nav>
 
-          {/* RIGHT: SOCIAL + DARK MODE (Desktop Only) */}
-          <div className="hidden md:flex items-center gap-4 text-xl">
-            <FaFacebook className="cursor-pointer hover:text-blue-600" />
-            <FaInstagram className="cursor-pointer hover:text-pink-600" />
-            <FaTwitter className="cursor-pointer hover:text-blue-400" />
-
-            {/* DARK MODE TOGGLE */}
+          {/* RIGHT TOOLS */}
+          <div className="hidden md:flex text-xl items-center gap-4">
             <button onClick={() => setDark(!dark)}>
               {dark ? <FaSun /> : <FaMoon />}
             </button>
           </div>
 
-          {/* MOBILE MENU BUTTON */}
-          <button
-            className="md:hidden text-3xl"
-            onClick={() => setOpen(true)}
-          >
+          {/* MOBILE HAMBURGER */}
+          <button onClick={() => setOpenMobile(true)} className="md:hidden text-3xl">
             <GiHamburgerMenu />
           </button>
         </div>
       </header>
 
-      {/* MOBILE SLIDE MENU */}
-      {open && (
+      {/* MOBILE MENU OVERLAY */}
+      {openMobile && (
         <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black bg-opacity-60 z-50"
+          onClick={() => setOpenMobile(false)}
         >
           <div
-            className="absolute top-0 right-0 bg-white dark:bg-gray-900 w-3/4 h-full shadow-lg p-6 flex flex-col gap-6 animate-slideLeft"
+            className="absolute top-0 right-0 w-3/4 bg-white dark:bg-gray-900 h-full p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            <button className="text-3xl mb-4" onClick={() => setOpen(false)}>
+            {/* Close */}
+            <button
+              className="text-3xl mb-6"
+              onClick={() => setOpenMobile(false)}
+            >
               <IoClose />
             </button>
 
-            {/* Menu Links */}
-            <Link href="/" onClick={() => setOpen(false)} className="text-lg font-medium">
-              Home
-            </Link>
+            {/* Links */}
+            <div className="flex flex-col gap-6 text-lg font-medium">
 
-            {/* MOBILE DROPDOWN */}
-            <button
-              onClick={() => setDropdown(!dropdown)}
-              className="text-lg font-medium text-left"
-            >
-              Products ▼
-            </button>
-            {dropdown && (
-              <div className="ml-2 flex flex-col gap-3 text-base">
-                <Link href="/products/magnet" onClick={() => setOpen(false)}>Magnet</Link>
-                <Link href="/products/posters" onClick={() => setOpen(false)}>Posters</Link>
-                <Link href="/products/custom" onClick={() => setOpen(false)}>Custom</Link>
-              </div>
-            )}
+              <Link href="/" onClick={() => setOpenMobile(false)}>
+                Home
+              </Link>
 
-            <Link href="/about" className="text-lg font-medium" onClick={() => setOpen(false)}>
-              About
-            </Link>
-            <Link href="/contact" className="text-lg font-medium" onClick={() => setOpen(false)}>
-              Contact
-            </Link>
+              {/* Mobile Mega Dropdown */}
+              <details className="cursor-pointer">
+                <summary className="text-lg font-medium">Products</summary>
+                <div className="ml-4 mt-2">
+                  {productMenu.map((cat, index) => (
+                    <div key={index} className="mb-4">
+                      <p className="font-semibold">{cat.title}</p>
+                      {cat.links.map((l, idx) => (
+                        <Link
+                          key={idx}
+                          href={l.href}
+                          className="block text-sm mt-1"
+                          onClick={() => setOpenMobile(false)}
+                        >
+                          {l.name}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </details>
 
-            {/* Social Icons */}
-            <div className="flex gap-4 mt-6 text-2xl">
-              <FaFacebook />
-              <FaInstagram />
-              <FaTwitter />
+              <Link href="/about" onClick={() => setOpenMobile(false)}>
+                About
+              </Link>
+
+              <Link href="/contact" onClick={() => setOpenMobile(false)}>
+                Contact
+              </Link>
+
+              {/* Dark mode */}
+              <button
+                onClick={() => setDark(!dark)}
+                className="mt-4 flex items-center gap-3"
+              >
+                {dark ? <FaSun /> : <FaMoon />}
+                {dark ? "Light Mode" : "Dark Mode"}
+              </button>
             </div>
-
-            {/* Dark mode toggle */}
-            <button
-              className="mt-4 flex items-center gap-3"
-              onClick={() => setDark(!dark)}
-            >
-              {dark ? <FaSun /> : <FaMoon />}
-              <span>{dark ? "Light Mode" : "Dark Mode"}</span>
-            </button>
           </div>
         </div>
       )}
-
-      {/* MOBILE BOTTOM NAVIGATION */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-black shadow-xl py-3 flex justify-around text-2xl z-40">
-        <Link href="/">
-          <span>🏠</span>
-        </Link>
-        <Link href="/products">
-          <span>🛒</span>
-        </Link>
-        <Link href="/about">
-          <span>ℹ️</span>
-        </Link>
-        <Link href="/contact">
-          <span>📞</span>
-        </Link>
-      </div>
     </>
   );
 }
