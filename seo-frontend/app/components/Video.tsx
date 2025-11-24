@@ -2,10 +2,10 @@
 
 const videos = [
   "dQw4w9WgXcQ",
-  "ysz5S6PUM-U",
-  "tAGnKpE4NCI",
-  "LXb3EKWsInQ",
-  "E7wJTI-1dvQ",
+  "n0U0DCwcHUo",
+  "5TNTwMBV_wY",
+  // "LXb3EKWsInQ",
+  // "E7wJTI-1dvQ",
 ];
 
 export default function Video() {

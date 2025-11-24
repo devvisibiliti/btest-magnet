@@ -4,8 +4,6 @@
 //   description: "Get in touch with us for queries, support, or services.",
 // };
 
-
-
 import Image from "next/image";
 import { useState } from "react";
 import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
@@ -46,7 +44,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="mt-4 max-w-2xl text-gray-200 text-lg">
-            We're here to assist with all your industrial detection needs.
+            Were here to assist with all your industrial detection needs.
           </p>
         </div>
       </section>
@@ -74,7 +72,7 @@ export default function ContactPage() {
           </div>
 
           {/* ADDRESS */}
-          <div classname="bg-white shadow-md p-6 rounded-xl border flex flex-col items-center">
+          <div className="bg-white shadow-md p-6 rounded-xl border flex flex-col items-center">
             <div className="bg-blue-600 text-white p-4 rounded-full mb-4">
               <FiMapPin className="text-2xl" />
             </div>
