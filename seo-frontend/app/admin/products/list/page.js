@@ -5,7 +5,7 @@ export default function AdminProductList() {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const res = await fetch('http://localhost:5000/api/products');
+    const res = await fetch('http://localhost:5300/api/products');
     return await res.json();
   };
 
@@ -24,7 +24,7 @@ export default function AdminProductList() {
 
   const handleDelete = async (id) => {
     if (!confirm('Delete product?')) return;
-    const res = await fetch(`http://localhost:5000/api/products/${id}`, { method: 'DELETE' });
+    const res = await fetch(`http://localhost:5300/api/products/${slug}`, { method: 'DELETE' });
     if (res.ok) {
       try {
         const json = await fetchProducts();

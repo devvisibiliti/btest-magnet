@@ -23,68 +23,68 @@ const reviews: Review[] = [
 //   },
   {
     id: "2",
-    name: "Mohan",
-    role: "Member",
+    name: "Hand Held Metal Detector",
+    // role: "Member",
     avatar: "/images/home/hand-held-metal-detector.jpg",
     text:
-      "Amazing learning and networking — monthly progress has been real and measurable for my business.",
+      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
     pos: { left: "20%", top: "50%" },
   },
   {
     id: "3",
-    name: "Sultan",
-    role: "Member",
-    avatar: "/images/home/PH41230-2-low.jpg",
+    name: "Hand Held Metal Detector",
+    // role: "Member",
+    avatar: "/images/home/hand-held-metal-detector.jpg",
     text:
-      "The mentorship and critique here helped us refine our product-market fit quickly.",
+      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
     pos: { left: "5%", top: "40%" },
   },
   {
     id: "4",
-    name: "Ragapriya",
-    role: "Member",
-    avatar: "/images/home/Electromagnets.jpg",
+    name: "Hand Held Metal Detector",
+    // role: "Member",
+    avatar: "/images/home/hand-held-metal-detector.jpg",
     text:
-      "A place where practical feedback and encouragement meet — highly recommended.",
+      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
     pos: { left: "10%", top: "80%" },
   },
   {
     id: "5",
-    name: "Irfan",
-    role: "Member",
-    avatar: "/images/home/backview_edited_noshadow2_5c1f8190-f1a9-427d-85f3-61b0a0b54a70.webp",
+    name: "Hand Held Metal Detector",
+    // role: "Member",
+    avatar: "/images/home/hand-held-metal-detector.jpg",
     text:
-      "The monthly masterclasses are the highlight. Tons of actionable tips.",
+      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
     pos: { left: "95%", top: "40%" },
   },
   {
     id: "6",
-    name: "Sai Prasad",
-    role: "Member",
+    name: "Hand Held Metal Detector",
+    // role: "Member",
     avatar: "/images/home/hand-held-metal-detector.jpg",
     text:
-      "Community driven growth — we swapped ideas and got real results.",
+      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
     pos: { left: "80%", top: "50%" },
   },
   {
     id: "7",
-    name: "Yamini",
-    role: "Member",
-    avatar: "/images/home/Electromagnets.jpg",
+    name: "Hand Held Metal Detector",
+    // role: "Member",
+    avatar: "/images/home/hand-held-metal-detector.jpg",
     text:
-      "Love the intimate group size and focused feedback. Real value.",
+      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
     pos: { left: "90%", top: "80%" },
   },
 ];
 
 export default function ReviewSection() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  // const [isPlaying, setIsPlaying] = useState(true);
   const autoplayRef = useRef<number | null>(null);
 
   // autoplay (optional)
   useEffect(() => {
-    if (!isPlaying) return;
+    // if (!isPlaying) return;
 
     autoplayRef.current = window.setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % reviews.length);
@@ -93,16 +93,16 @@ export default function ReviewSection() {
     return () => {
       if (autoplayRef.current) window.clearInterval(autoplayRef.current);
     };
-  }, [isPlaying]);
+  }, []);
 
   // pause autoplay when user interacts
   const handleSelect = (index: number) => {
     setActiveIndex(index);
-    setIsPlaying(false);
-    if (autoplayRef.current) {
-      window.clearInterval(autoplayRef.current);
-      autoplayRef.current = null;
-    }
+    // setIsPlaying(false);
+    // if (autoplayRef.current) {
+    //   window.clearInterval(autoplayRef.current);
+    //   autoplayRef.current = null;
+    // }
   };
 
   // keyboard support: left/right to navigate
@@ -110,10 +110,10 @@ export default function ReviewSection() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") {
         setActiveIndex((p) => (p - 1 + reviews.length) % reviews.length);
-        setIsPlaying(false);
+        // setIsPlaying(false);
       } else if (e.key === "ArrowRight") {
         setActiveIndex((p) => (p + 1) % reviews.length);
-        setIsPlaying(false);
+        // setIsPlaying(false);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -125,41 +125,44 @@ export default function ReviewSection() {
       <h2 className="text-3xl font-bold text-center mb-2">
         Magnetronix
       </h2>
-      <p className="text-center text-lg mb-8">Here what they have to say.</p>
+      <p className="text-center text-lg">Here what they have to say.</p>
 
-      <div className="relative h-[600px] md:h-[520px]">
+      <div className="relative h-[600px] md:h-[300px]">
         {/* Avatar cluster layer (absolute container) */}
         <div className="absolute inset-0">
           {reviews.map((r, i) => {
             const active = i === activeIndex;
             return (
               <button
-                key={r.id}
-                aria-pressed={active}
-                aria-label={`Show review by ${r.name}`}
-                onClick={() => handleSelect(i)}
-                className={`profile-button absolute rounded-full overflow-hidden transition-all duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2`}
-                style={{
-                  left: r.pos.left,
-                  top: r.pos.top,
-                  transform: "translate(-50%, -50%)",
-                  zIndex: active ? 40 : 10,
-                }}
-              >
-                <img
-                  src={r.avatar}
-                  alt={r.name}
-                  className={`object-cover w-10 h-10 md:w-16 md:h-16 rounded-full transition-all duration-500 ${
-                    active
-                      ? "w-28 h-28 md:w-32 md:h-32 grayscale-0 scale-105 shadow-xl"
-                      : "grayscale filter opacity-80"
-                  }`}
-                  style={{
-                    // smoother scaling: keep layout stable by setting min sizes
-                    display: "block",
-                  }}
-                />
-              </button>
+  key={r.id}
+  aria-pressed={active}
+  aria-label={`Show review by ${r.name}`}
+  onClick={() => handleSelect(i)}
+  className="profile-button absolute flex items-center justify-center rounded-full transition-all duration-500 ease-in-out"
+  style={{
+    left: r.pos.left,
+    top: r.pos.top,
+    transform: "translate(-50%, -50%)",
+    zIndex: active ? 40 : 10,
+  }}
+>
+  <div
+    className={`
+      rounded-full overflow-hidden transition-all duration-500 
+      ${active
+        ? "w-28 h-28 md:w-32 md:h-32 scale-105 shadow-xl"
+        : "w-10 h-10 md:w-16 md:h-16 opacity-80 grayscale"
+      }
+    `}
+  >
+    <img
+      src={r.avatar}
+      alt={r.name}
+      className="object-cover w-full h-full"
+    />
+  </div>
+</button>
+
             );
           })}
         </div>
@@ -172,7 +175,7 @@ export default function ReviewSection() {
               onClick={() =>
                 setActiveIndex((p) => (p - 1 + reviews.length) % reviews.length)
               }
-              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
+              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-700"
               aria-label="Previous review"
             >
               {/* <svg
@@ -188,54 +191,58 @@ export default function ReviewSection() {
             </button>
 
             {/* testimonial card */}
-            <div className="bg-white dark:bg-white-800 rounded-lg shadow-md p-6 max-w-xl w-[85%] md:w-[60%]">
-              <div className="relative text-center mb-4">
-                <blockquote className="text-base md:text-lg md:px-8">
-                  {reviews[activeIndex].text}
-                </blockquote>
-              </div>
-              <div className="text-center mt-4">
-                <h3 className="font-bold text-lg">{reviews[activeIndex].name}</h3>
-                {reviews[activeIndex].role && (
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {reviews[activeIndex].role}
-                  </p>
-                )}
-              </div>
-            </div>
+            
+<div className="flex justify-center items-center">
+  <div className="bg-[lab(83.27_8.65_108.89_/_0.99)] dark:bg-white-800 rounded-lg shadow-md p-6 max-w-xl w-[85%] md:w-[80%] mx-auto">
+    <div className="relative text-center mb-4">
+      <blockquote className="text-base md:text-lg md:px-8">
+        {reviews[activeIndex].text}
+      </blockquote>
+    </div>
+    <div className="text-center mt-4">
+      <h3 className="font-bold text-lg">{reviews[activeIndex].name}</h3>
+      {reviews[activeIndex].role && (
+        <p className="text-gray-600 dark:text-gray-300">
+          {reviews[activeIndex].role}
+        </p>
+      )}
+    </div>
+  </div>
+</div>
+
 
             {/* right chevron */}
             <button
               onClick={() => setActiveIndex((p) => (p + 1) % reviews.length)}
-              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
+              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-500"
               aria-label="Next review"
             >
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth={2}
+                strokeWidth={4}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
+              </svg> */}
             </button>
           </div>
 
           {/* small pager dots (optional) */}
-          <div className="flex gap-2 mt-6">
+          {/* <div className="flex gap-2 mt-3">
             {reviews.map((_, i) => (
               <button
                 key={i}
                 onClick={() => handleSelect(i)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  activeIndex === i ? "bg-gray-800" : "bg-gray-300"
+                className={`w-3 h-2 rounded-full transition-colors ${
+                  activeIndex === i ? "bg-gray-800" : "bg-gray-500"
                 }`}
                 aria-label={`Go to review ${i + 1}`}
               />
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 

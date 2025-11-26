@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default async function CategoryPage({ params }) {
   const category = params.category;
-  const res = await fetch(`http://localhost:5000/api/products?category=${encodeURIComponent(category)}`, { cache: 'no-store' });
+  const res = await fetch(`http://localhost:5300/api/products?category=${encodeURIComponent(category)}`, { cache: 'no-store' });
   const products = await res.json();
 
   return (

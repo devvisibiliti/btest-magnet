@@ -34,9 +34,9 @@ const benefits:BenefitType[]=[
 
 export default function Benefits(){
     return(
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-12 max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-12 max-w-7xl mx-auto px-6 ">
             {benefits.map((benefit, index)=>(
-                <div key={index} className="flex flex-col items-center text-center p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div key={index} className="flex flex-col items-center text-center p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 transform transition-transform duration-300 ease-in-out hover:bg-[lab(83.27_8.65_108.89_/_0.99)] hover:scale-105 hover:-translate-y-1">
                     <div className="text-4xl mb-4 text-blue-600">
                         {benefit.icon === "FaShippingFast" && <FaShippingFast />}
                         {benefit.icon === "FaHeadset" && <FaHeadset />} 

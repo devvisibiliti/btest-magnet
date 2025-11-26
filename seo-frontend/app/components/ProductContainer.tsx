@@ -5,11 +5,11 @@ import Image from "next/image";
 
 type HighlightCard = {
   id: string;
-  tag: string;        // e.g. "NEW", "HIGHLIGHT"
-  title: string;      // main heading
-  href: string;       // link
-  image: string;      // image path (/public or remote)
-  ctaLabel?: string;  // button text
+  tag: string;
+  title: string;
+  href: string;
+  image: string;
+  ctaLabel?: string;
 };
 
 const cards: HighlightCard[] = [
@@ -18,7 +18,7 @@ const cards: HighlightCard[] = [
     tag: "NEW",
     title: "METAL DETECTORS",
     href: "/products/x-ray-inspection-systems",
-    image: "/images/home/raycon-family.jpg",
+    image: "/categories/tap1.png",
     ctaLabel: "LEARN MORE",
   },
   {
@@ -26,7 +26,7 @@ const cards: HighlightCard[] = [
     tag: "HIGHLIGHTS",
     title: "MAGNETIC EQUIPMENTS",
     href: "/compliance-package",
-    image: "/images/home/compliance-package.jpg",
+    image: "/categories/tap1.png",
     ctaLabel: "LEARN MORE",
   },
   {
@@ -34,7 +34,7 @@ const cards: HighlightCard[] = [
     tag: "HIGHLIGHT",
     title: "ELECTROMAGNETIC EQUIPMENTS",
     href: "/service-support/services",
-    image: "/images/home/smart-service-solutions.jpg",
+    image: "/categories/tap1.png",
     ctaLabel: "LEARN MORE",
   },
   {
@@ -42,7 +42,7 @@ const cards: HighlightCard[] = [
     tag: "NEW",
     title: "ELECTROPERMENANT MAGNETS",
     href: "/products/material-management-systems/platform-systems",
-    image: "/images/home/material-management.jpg",
+    image: "/categories/tap1.png",
     ctaLabel: "LEARN MORE",
   },
   {
@@ -50,7 +50,7 @@ const cards: HighlightCard[] = [
     tag: "SOLUTIONS",
     title: "VIBRATORY EQUIPMENTS",
     href: "/solutions/food-and-beverage",
-    image: "/images/home/food-inspection.jpg",
+    image: "/categories/tap1.png",
     ctaLabel: "EXPLORE",
   },
   {
@@ -58,7 +58,7 @@ const cards: HighlightCard[] = [
     tag: "SOLUTIONS",
     title: "MIXING EQUIPMENTS",
     href: "/solutions/plastics-and-recycling",
-    image: "/images/home/plastics-recycling.jpg",
+    image: "/categories/tap1.png",
     ctaLabel: "EXPLORE",
   },
 ];
@@ -70,51 +70,105 @@ export default function ProductContainer() {
         <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
           Magnetronix Highlights
         </h2>
-        <p className="mt-2 text-base text-gray-600">
-          Magnet
-        </p>
+        <p className="mt-2 text-base text-gray-600">Magnet</p>
       </div>
 
-      {/* GRID: 1 col (mobile), 2 cols (md), 3 cols (xl) => 6 cards total */}
+      {/* GRID */}
       <div className="grid gap-6 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
         {cards.map((card, index) => (
           <Link
             key={card.id}
             href={card.href}
-            className="group relative block h-[260px] sm:h-[320px] md:h-[340px] overflow-hidden rounded-2xl bg-black"
+            className="
+              group relative block 
+              h-[260px] sm:h-[320px] md:h-[340px]
+              overflow-hidden rounded-2xl bg-black
+              transition-all duration-500 
+              hover:-translate-y-2 hover:shadow-2xl hover:rotate-[0.3deg]
+            "
           >
-            {/* background image with zoom on hover */}
+
+            {/* Background Image */}
             <div className="absolute inset-0">
               <Image
                 src={card.image}
                 alt={card.title}
                 fill
-                priority={index < 3} // first row higher priority
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                priority={index < 3}
+                className="
+                  object-cover 
+                  transition-all duration-700 ease-out
+                  group-hover:scale-110 group-hover:brightness-[0.75]
+                "
               />
             </div>
 
-            {/* gradient overlay with subtle darkening on hover */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-500 group-hover:from-black/95 group-hover:via-black/60" />
+            {/* Dark Overlay */}
+            <div className="
+              pointer-events-none absolute inset-0 
+              bg-gradient-to-t from-black/40 via-black/30 to-transparent
+              transition-all duration-700
+              group-hover:from-black/80 group-hover:via-black/60
+            "></div>
 
-            {/* content */}
+            {/* Color Gradient Overlay */}
+            <div className="
+              pointer-events-none absolute inset-0 
+              opacity-0 group-hover:opacity-100
+              transition-opacity duration-700
+              bg-[linear-gradient(135deg,#0187CF55,#3B281E55)]
+              mix-blend-soft-light
+            "></div>
+
+            {/* Glow Border */}
+            <div className="
+              pointer-events-none absolute inset-0 rounded-2xl 
+              border border-transparent
+              group-hover:border-[#0187CFcc]
+              group-hover:shadow-[0_0_30px_#0187CFAA]
+              transition-all duration-500
+            "></div>
+
+            {/* Content */}
             <div className="relative z-10 flex h-full flex-col justify-between p-5 sm:p-6">
               <div className="space-y-2">
-                <p className="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-[#00B5FF]">
+                <p className="
+                  inline-block text-xs font-semibold uppercase 
+                  tracking-[0.25em] text-[#00B5FF]
+                  group-hover:text-white transition-colors duration-300
+                ">
                   {card.tag}
                 </p>
-                <h3 className="max-w-xs text-xl font-semibold text-white sm:text-2xl">
+
+                <h3 className="
+                  max-w-xs text-xl font-semibold text-white sm:text-2xl
+                  transition-all duration-500 
+                  group-hover:text-[#00B5FF]
+                ">
                   {card.title}
                 </h3>
               </div>
 
-              {/* CTA with animation: slide & lift on hover */}
+              {/* CTA */}
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-gray-900 shadow-md transition-all duration-300 group-hover:-translate-y-0.5 group-hover:bg-[#00B5FF] group-hover:text-white">
+                <span className="
+                  inline-flex items-center gap-2 rounded-full 
+                  bg-white/90 px-4 py-2 text-sm font-medium text-gray-900 
+                  shadow-md 
+                  transition-all duration-300
+                  group-hover:-translate-y-1 
+                  group-hover:bg-[#0187CF] group-hover:text-white
+                  group-hover:shadow-[0_0_12px_#0187CFAA]
+                ">
                   {card.ctaLabel ?? "Learn more"}
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                    className="
+                      h-4 w-4 
+                      transition-transform duration-300 
+                      group-hover:translate-x-1
+                    "
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -130,8 +184,6 @@ export default function ProductContainer() {
               </div>
             </div>
 
-            {/* subtle lift + shadow on the entire card */}
-            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/10 transition-all duration-300 group-hover:translate-y-[-3px] group-hover:shadow-xl" />
           </Link>
         ))}
       </div>

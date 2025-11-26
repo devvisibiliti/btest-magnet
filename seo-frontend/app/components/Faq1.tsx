@@ -12,12 +12,14 @@ export default function Faq1() {
       question: "test title ",
       answer:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      img:"/images/home/hand-held-metal-detector.jpg"  
     },
     {
       id: 2,
       question: "test title",
       answer:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        img:"/images/home/hand-held-metal-detector.jpg"
     },
     {
       id: 3,
@@ -71,7 +73,7 @@ export default function Faq1() {
 
   return (
     <section className="w-full md:w-4/5 lg:w-[77%] mx-auto p-4 sm:p-6 lg:p-8">
-      <h2 className="text-3xl font-bold mb-6 text-center">FAQs</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">Client Reviews</h2>
 
       {faqs.map((faq) => {
         const isOpen = openId === faq.id;
@@ -121,7 +123,10 @@ export default function Faq1() {
               className="px-4 pb-4 text-gray-600 text-base 
               overflow-hidden transition-all duration-300 max-h-0 opacity-0"
             >
-              {faq.answer}
+              <div>
+{faq.answer} <img src={faq.img} alt={faq.question} className="grid  grid rounded align-centre col-3 w-18 h-auto mb-4"/>
+              </div>
+              
             </div>
           </div>
         );

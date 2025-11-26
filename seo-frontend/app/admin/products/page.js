@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export default async function ProductsPage() {
-  const res = await fetch('http://localhost:5000/api/products', { cache: 'no-store' });
+  const res = await fetch('http://localhost:5300/api/products', { cache: 'no-store' });
   const products = await res.json();
 
   // group by category
@@ -23,7 +23,7 @@ export default async function ProductsPage() {
                 <img src={p.images?.[0]} alt="" style={{ width:'100%', height:120, objectFit:'cover' }} />
                 <h3>{p.title}</h3>
                 <p>₹{p.price}</p>
-                <Link href={`/products/view/${p.slug}`}>View</Link>
+                <Link href={`admin/products/view/${p.slug}`}>View</Link>
               </div>
             ))}
           </div>

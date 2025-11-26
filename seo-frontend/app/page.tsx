@@ -4,9 +4,10 @@ export const metadata = {
 };
 
 import Benefits from "./components/Benefits";
+import AnimatedReviewSection from "./components/CustomerReview";
 import Faq from "./components/Faq";
-import Faq1 from "./components/Faq1";
-import HeroSection from "./components/HeroSection";
+// import Faq1 from "./components/Faq1";
+// import HeroSection from "./components/HeroSection";
 import IndustrialSolutions from "./components/IndustrialSolutions";
 import ProductContainer from "./components/ProductContainer";
 import ReviewSection from "./components/ReviewSection";
@@ -17,9 +18,11 @@ export default function Home() {
     <main>
       {/* <HeroSection /> */}
       <IndustrialSolutions />
+      <ReviewSection />
       <Benefits />
       <ProductContainer />
-      <ReviewSection />
+      <AnimatedReviewSection />
+      
       <Faq />
       {/* <Faq1 /> */}
       <Video />
