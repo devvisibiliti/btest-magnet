@@ -1,20 +1,50 @@
-import Link from 'next/link';
+"use client";
 
-export default async function CategoryPage({ params }) {
-  const category = params.category;
-  const res = await fetch(`http://localhost:5300/api/products?category=${encodeURIComponent(category)}`, { cache: 'no-store' });
-  const products = await res.json();
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+export default function CategoryPage() {
+  const { category } = useParams(); // ✅ FIX: get params in client component
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function load() {
+      if (!category) return;
+
+      const res = await fetch(
+        `http://localhost:5300/api/products?category=${encodeURIComponent(
+          category
+        )}`,
+        { cache: "no-store" }
+      );
+      const data = await res.json();
+      setProducts(data);
+    }
+    load();
+  }, [category]);
 
   return (
-    <div style={{ padding:20 }}>
-      <h1>{category}</h1>
-      <div style={{ display:'flex', gap:10, flexWrap:'wrap' }}>
-        {products.map(p => (
-          <div key={p._id} style={{ border:'1px solid #ddd', padding:10, width:220 }}>
-            <img src={p.images?.[0]} alt="" style={{ width:'100%', height:120, objectFit:'cover' }} />
-            <h3>{p.title}</h3>
-            <p>₹{p.price}</p>
-            <Link href={`/products/view/${p.slug}`}>View</Link>
+    <div className="amazon-container">
+      <h1 className="amazon-heading">{category}</h1>
+
+      <div className="amazon-grid">
+        {products.map((p) => (
+          <div key={p._id} className="amazon-card">
+            <img src={p.images?.[0]} className="amazon-image" alt="" />
+
+            <div className="amazon-info">
+              <h3 className="amazon-title">{p.title}</h3>
+
+              <p className="amazon-price">
+                <span className="currency">₹</span>
+                {p.price}
+              </p>
+
+              <Link href={`/products/view/${p.slug}`} className="amazon-button">
+                View Product
+              </Link>
+            </div>
           </div>
         ))}
       </div>

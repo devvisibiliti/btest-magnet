@@ -4,6 +4,18 @@ import Product from "../models/product.js";
 
 const router = express.Router();
 
+
+
+// GET ALL PRODUCTS
+router.get("/", async (req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch products" });
+  }
+});
+
 // CREATE PRODUCT
 router.post("/", async (req, res) => {
   try {
@@ -29,28 +41,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// GET ALL PRODUCTS
-router.get("/", async (req, res) => {
-  try {
-    const products = await Product.find().sort({ createdAt: -1 });
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch products" });
-  }
-});
 
-// GET SINGLE PRODUCT BY SLUG
-router.get("/slug/:slug", async (req, res) => {
-  try {
-    const product = await Product.findOne({ slug: req.params.slug });
-
-    if (!product) return res.status(404).json({ error: "Product not found" });
-
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch product" });
-  }
-});
 
 // UPDATE
 router.put("/:id", async (req, res) => {
@@ -69,6 +60,19 @@ router.delete("/:id", async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete" });
+  }
+});
+
+// GET SINGLE PRODUCT BY SLUG
+router.get("/slug/:slug", async (req, res) => {
+  try {
+    const product = await Product.findOne({ slug: req.params.slug });
+
+    if (!product) return res.status(404).json({ error: "Product not found" });
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch product" });
   }
 });
 

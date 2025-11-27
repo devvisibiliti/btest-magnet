@@ -1,49 +1,248 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
-export default function EditProduct({ params }) {
-  const { id } = params;
-  const [product, setProduct] = useState(null);
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import {
+  Box,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+  Button,
+  MenuItem,
+  Grid,
+  IconButton,
+} from "@mui/material";
+// import DeleteIcon from "@mui/icons-material/Delete";
+
+export default function EditProduct() {
+  const { id } = useParams();
   const router = useRouter();
 
+  const [product, setProduct] = useState(null);
+
+  // Load product by ID
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products`)
-      .then(r => r.json())
-      .then(list => {
-        const p = list.find(x => x._id === id);
-        setProduct(p);
+    if (!id) return;
+
+    fetch(`http://localhost:5300/api/products/${id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setProduct(data);
       });
   }, [id]);
 
-  const handleSave = async () => {
-    const res = await fetch(`http://localhost:5000/api/products/${id}`, {
-      method: 'PUT',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(product)
+  // Handle multi-image upload
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+
+    const newImages = files.map((file) => URL.createObjectURL(file));
+
+    // Add new previews to existing images
+    setProduct({
+      ...product,
+      images: [...product.images, ...newImages],
     });
+  };
+
+  // Remove image
+  const removeImage = (index) => {
+    const updated = [...product.images];
+    updated.splice(index, 1);
+    setProduct({ ...product, images: updated });
+  };
+
+  // Save handler
+  const handleSave = async () => {
+    const res = await fetch(`http://localhost:5300/api/products/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(product),
+    });
+
     if (res.ok) {
-      alert('Saved');
-      router.push('/admin/products/list');
-    } else alert('Save failed');
+      alert("Product Updated Successfully!");
+      router.push("/admin/products/list");
+    } else {
+      alert("Save failed");
+    }
   };
 
   if (!product) return <div>Loading...</div>;
 
   return (
-    <div style={{ padding:20 }}>
-      <h1>Edit Product</h1>
-      <input value={product.title} onChange={e=>setProduct({...product, title: e.target.value})} />
-      <br />
-      <textarea value={product.description} onChange={e=>setProduct({...product, description: e.target.value})} />
-      <br />
-      <input type="number" value={product.price} onChange={e=>setProduct({...product, price: Number(e.target.value)})} />
-      <br />
-      <input type="number" value={product.discountPrice || ''} onChange={e=>setProduct({...product, discountPrice: Number(e.target.value)})} />
-      <br />
-      <input value={product.category} onChange={e=>setProduct({...product, category: e.target.value})} />
-      <br />
-      <button onClick={handleSave}>Save</button>
-    </div>
+    <Box sx={{ maxWidth: 800, mx: "auto", mt: 5 }}>
+      <Card sx={{ p: 3, boxShadow: 4 }}>
+        <Typography variant="h5" fontWeight={600} mb={3}>
+          Edit Product
+        </Typography>
+
+        <CardContent>
+          <Grid container spacing={3}>
+            {/* Title */}
+            <Grid item xs={12}>
+              <TextField
+                label="Product Title"
+                fullWidth
+                value={product?.title}
+                onChange={(e) =>
+                  setProduct({ ...product, title: e.target.value })
+                }
+              />
+            </Grid>
+
+            {/* Description */}
+            <Grid item xs={12}>
+              <TextField
+                label="Description"
+                fullWidth
+                multiline
+                minRows={3}
+                value={product?.description}
+                onChange={(e) =>
+                  setProduct({ ...product, description: e.target.value })
+                }
+              />
+            </Grid>
+
+            {/* Price + Discount */}
+            <Grid item xs={6}>
+              <TextField
+                label="Price (₹)"
+                type="number"
+                fullWidth
+                value={product?.price}
+                onChange={(e) =>
+                  setProduct({ ...product, price: Number(e.target.value) })
+                }
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <TextField
+                label="Discount Price (₹)"
+                type="number"
+                fullWidth
+                value={product?.discountPrice || ""}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    discountPrice: Number(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+
+            {/* Category */}
+            {/* <Grid item xs={12}>
+              <TextField
+                label="Category"
+                select
+                fullWidth
+                value={product.category}
+                onChange={(e) =>
+                  setProduct({ ...product, category: e.target.value })
+                }
+              >
+                <MenuItem value="electronics">Electronics</MenuItem>
+                <MenuItem value="fashion">Fashion</MenuItem>
+                <MenuItem value="mobile">Mobile</MenuItem>
+                <MenuItem value="beauty">Beauty</MenuItem>
+              </TextField>
+            </Grid> */}
+
+            {/* Image Uploader */}
+            <Grid item xs={12}>
+              <Typography variant="subtitle1" mb={1}>
+                Product Images
+              </Typography>
+
+              {/* Upload Box */}
+              <Box
+                sx={{
+                  border: "2px dashed #bbb",
+                  borderRadius: 2,
+                  padding: 3,
+                  textAlign: "center",
+                  cursor: "pointer",
+                  background: "#fafafa",
+                }}
+                onClick={() => document.getElementById("upload-input").click()}
+              >
+                <input
+                  id="upload-input"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  hidden
+                  onChange={handleImageUpload}
+                />
+                <Typography variant="body2" color="textSecondary">
+                  Click to upload images or drag & drop
+                </Typography>
+              </Box>
+
+              {/* PREVIEW GRID */}
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  flexWrap: "wrap",
+                  mt: 2,
+                }}
+              >
+                {product.images?.map((img, index) => (
+                  <Box key={index} sx={{ position: "relative" }}>
+                    <img
+                      src={img}
+                      alt=""
+                      style={{
+                        width: 120,
+                        height: 120,
+                        objectFit: "cover",
+                        borderRadius: 8,
+                        border: "1px solid #ddd",
+                      }}
+                    />
+
+                    {/* DELETE BUTTON */}
+                    <IconButton
+                      size="small"
+                      onClick={() => removeImage(index)}
+                      sx={{
+                        position: "absolute",
+                        top: -10,
+                        right: -10,
+                        background: "white",
+                        boxShadow: 2,
+                      }}
+                    >
+                      <DeleteIcon fontSize="small" color="error" />
+                    </IconButton>
+                  </Box>
+                ))}
+              </Box>
+            </Grid>
+
+            {/* Save Button */}
+            <Grid item xs={12} mt={2}>
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                onClick={handleSave}
+                sx={{
+                  py: 1.5,
+                  fontSize: "16px",
+                  backgroundColor: "#1976d2",
+                }}
+              >
+                Save Changes
+              </Button>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

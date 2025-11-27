@@ -101,6 +101,194 @@ a:hover {
   animation: scaleUp 0.4s ease forwards;
 }
 
+/* ---------------- AMAZON STYLE PAGE-Category ---------------- */
+
+.amazon-container {
+  padding: 25px 30px;
+  background: #f3f3f3;
+}
+
+.amazon-heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-transform: capitalize;
+  color: #111;
+}
+
+/* ---------------- GRID ---------------- */
+
+.amazon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+/* ---------------- CARD ---------------- */
+
+.amazon-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 14px;
+  border: 1px solid #ddd;
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.amazon-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------------- IMAGE ---------------- */
+
+.amazon-image {
+  width: 100%;
+  height: 210px;
+  object-fit: contain;
+  background: #fff;
+}
+
+/* ---------------- INFO SECTION ---------------- */
+
+.amazon-info {
+  padding: 10px 4px;
+}
+
+/* ---------------- TITLE ---------------- */
+
+.amazon-title {
+  height: 50px;
+  font-size: 0.95rem;
+  color: #0f1111;
+  font-weight: 500;
+  margin: 6px 0;
+  line-height: 1.3;
+
+  /* Amazon-style 3 line clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------------- PRICE ---------------- */
+
+.amazon-price {
+  color: #b12704;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.amazon-price .currency {
+  font-size: 0.9rem;
+  position: relative;
+  top: -2px;
+}
+
+/* ---------------- AMAZON BUTTON ---------------- */
+
+.amazon-button {
+  background: #ffd814;
+  border-radius: 7px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f1111;
+  border: 1px solid #f3cc00;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.amazon-button:hover {
+  background: #f7ca00;
+}
+
+/* ----------------- ADMIN PAGE List Css File ------------------ */
+
+.admin-container {
+  padding: 30px;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+
+.admin-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* ----------------- TABLE ------------------ */
+
+.table-wrapper {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #e5e5e5;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.admin-table thead tr {
+  background: #f2f2f2;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.admin-table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* ----------------- BUTTONS ------------------ */
+
+.action-cell {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.edit-btn {
+  background: #2563eb;
+  color: white;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.edit-btn:hover {
+  background: #1e4fd6;
+}
+
+.delete-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  background: #bb1f1f;
+}
+
+
+
 
 
 
