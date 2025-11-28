@@ -4,9 +4,9 @@ import Product from "../models/product.js";
 
 const router = express.Router();
 
-
-
+// -------------------------------------------------------
 // GET ALL PRODUCTS
+// -------------------------------------------------------
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
@@ -16,7 +16,9 @@ router.get("/", async (req, res) => {
   }
 });
 
+// -------------------------------------------------------
 // CREATE PRODUCT
+// -------------------------------------------------------
 router.post("/", async (req, res) => {
   try {
     const { title, description, price, discountPrice, category, images = [], stock = 1 } = req.body;
@@ -31,7 +33,7 @@ router.post("/", async (req, res) => {
       category,
       images,
       stock,
-      slug
+      slug,
     });
 
     res.json(product);
@@ -41,19 +43,46 @@ router.post("/", async (req, res) => {
   }
 });
 
+// -------------------------------------------------------
+// GET PRODUCT BY ID  ← REQUIRED FOR ADMIN VIEW
+// -------------------------------------------------------
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
 
+    if (!product) return res.status(404).json({ error: "Product not found" });
 
-// UPDATE
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch product" });
+  }
+});
+
+// -------------------------------------------------------
+// UPDATE PRODUCT
+// -------------------------------------------------------
 router.put("/:id", async (req, res) => {
   try {
-    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    let body = req.body;
+
+    // auto-update slug if title changed
+    if (body.title) {
+      body.slug = slugify(body.title, { lower: true });
+    }
+
+    const updated = await Product.findByIdAndUpdate(req.params.id, body, {
+      new: true,
+    });
+
     res.json(updated);
   } catch (err) {
     res.status(500).json({ error: "Failed to update" });
   }
 });
 
-// DELETE
+// -------------------------------------------------------
+// DELETE PRODUCT
+// -------------------------------------------------------
 router.delete("/:id", async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
@@ -63,17 +92,19 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// GET SINGLE PRODUCT BY SLUG
-router.get("/slug/:slug", async (req, res) => {
-  try {
-    const product = await Product.findOne({ slug: req.params.slug });
+// -------------------------------------------------------
+// GET PRODUCT BY SLUG (Public page) 
+// -------------------------------------------------------
+// router.get("/slug/:slug", async (req, res) => {
+//   try {
+//     const product = await Product.findOne({ slug: req.params.slug });
 
-    if (!product) return res.status(404).json({ error: "Product not found" });
+//     if (!product) return res.status(404).json({ error: "Product not found" });
 
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch product" });
-  }
-});
+//     res.json(product);
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch product" });
+//   }
+// });
 
 export default router;

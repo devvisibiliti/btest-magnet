@@ -10,7 +10,7 @@ import { Navigation, Thumbs, Pagination } from "swiper/modules";
 
 
 export default function ProductDetailPage({ params }) {
-  const { slug } = use(params);
+  const { id } = use(params);
 
  
 
@@ -28,7 +28,7 @@ export default function ProductDetailPage({ params }) {
   // 1. Fetch Product
   // ----------------------------------------------------
   useEffect(() => {
-    fetch(`http://localhost:5300/api/products/slug/${slug}`)
+    fetch(`http://localhost:5300/api/products/${id}`)
       .then((r) => r.json())
       .then((data) => {
         console.log("PRODUCT RESPONSE:", data);
@@ -43,11 +43,11 @@ export default function ProductDetailPage({ params }) {
           )
             .then((r) => r.json())
             .then((list) => {
-              setRelated(list.filter((p) => p.slug !== slug).slice(0, 8));
+              setRelated(list.filter((p) => p._id !== id).slice(0, 8));
             });
         }
       });
-  }, [slug]);
+  }, [id]);
 
   if (!product) return <div className="text-center p-20">Loading...</div>;
 
@@ -329,12 +329,12 @@ export default function ProductDetailPage({ params }) {
               </div>
 
               <div className="flex gap-4 mt-6">
-                <button
+                {/* <button
                   onClick={addToCart}
                   className="flex-1 bg-yellow-500 py-3 rounded font-semibold"
                 >
                   Add to Cart
-                </button>
+                </button> */}
                 <button
                   onClick={buyNow}
                   className="flex-1 bg-orange-600 text-white py-3 rounded font-semibold"

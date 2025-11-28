@@ -68,11 +68,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log("CLOUDINARY ENV LOADED:", {
-  NAME: process.env.CLOUDINARY_NAME,
-  KEY: process.env.CLOUDINARY_KEY,
-  SECRET: process.env.CLOUDINARY_SECRET ? "SET" : "MISSING"
-});
+// console.log("CLOUDINARY ENV LOADED:", {
+//   NAME: process.env.CLOUDINARY_NAME,
+//   KEY: process.env.CLOUDINARY_KEY,
+//   SECRET: process.env.CLOUDINARY_SECRET ? "SET" : "MISSING"
+// });
 
 import express from "express";
 import mongoose from "mongoose";

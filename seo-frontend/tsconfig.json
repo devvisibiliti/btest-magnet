@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
-, "app/admin/products/view/[slug]/page.js"  ],
+    "**/*.mts",
+    "app/admin/products/view/[id]/page.js"
+  ],
   "exclude": ["node_modules"]
 }

@@ -20,22 +20,27 @@ export default function AddProductPage() {
       .catch(() => {});
   }, []);
 
-  const uploadToCloudinary = async (file) => {
-    const data = new FormData();
-    data.append("file", file);
-    data.append(
-      "upload_preset",
-      process.env.NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET
-    );
+const handleImageUpload = async (e) => {
+  const files = e.target.files;
+  const formData = new FormData();
 
-    const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD}/image/upload`,
-      { method: "POST", body: data }
-    );
+  for (let f of files) {
+    formData.append("images", f);
+  }
 
-    const json = await res.json();
-    return json.secure_url;
-  };
+  const res = await fetch("http://localhost:5300/api/upload/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await res.json();
+
+  // data.urls = [cloudinary_url1, cloudinary_url2...]
+
+  setImageFile(data.urls); // store URLs
+  setPreview(data.urls[0]); // show first preview
+};
+
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -46,8 +51,8 @@ export default function AddProductPage() {
     e.preventDefault();
     setLoading(true);
 
-    let imageUrl = null;
-    if (imageFile) imageUrl = await uploadToCloudinary(imageFile);
+    // let imageUrl = null;
+    // if (imageFile) imageUrl = await handleImageUpload(imageFile);
 
     const payload = {
       title,
@@ -55,7 +60,7 @@ export default function AddProductPage() {
       price: Number(price),
       discountPrice: discountPrice ? Number(discountPrice) : undefined,
       category,
-      images: imageUrl ? [imageUrl] : [],
+      images: imageFile || [],
       stock: 1,
     };
 
@@ -171,15 +176,13 @@ export default function AddProductPage() {
           <label className="block font-semibold mb-1">Product Image</label>
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition">
             <input
-              type="file"
-              className="hidden"
-              id="upload"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                setImageFile(f);
-                if (f) setPreview(URL.createObjectURL(f));
-              }}
-            />
+  id="upload"
+  type="file"
+  multiple
+  className="hidden"
+  onChange={handleImageUpload}
+/>
+
             <label
               htmlFor="upload"
               className="cursor-pointer text-blue-600 font-semibold"

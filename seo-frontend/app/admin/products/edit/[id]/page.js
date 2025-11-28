@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
   Button,
-  MenuItem,
   Grid,
   IconButton,
 } from "@mui/material";
@@ -19,7 +18,16 @@ export default function EditProduct() {
   const { id } = useParams();
   const router = useRouter();
 
-  const [product, setProduct] = useState(null);
+  // ✅ Provide default structure — prevents ALL errors
+  const [product, setProduct] = useState({
+    title: "",
+    description: "",
+    price: "",
+    discountPrice: "",
+    images: [],
+  });
+
+  const [loading, setLoading] = useState(true);
 
   // Load product by ID
   useEffect(() => {
@@ -28,28 +36,44 @@ export default function EditProduct() {
     fetch(`http://localhost:5300/api/products/${id}`)
       .then((r) => r.json())
       .then((data) => {
-        setProduct(data);
+        setProduct({
+          title: data.title ?? "",
+          description: data.description ?? "",
+          price: data.price ?? "",
+          discountPrice: data.discountPrice ?? "",
+          images: data.images ?? [],
+        });
+        setLoading(false);
       });
   }, [id]);
 
   // Handle multi-image upload
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
+  const handleImageUpload = async (e) => {
+  const files = Array.from(e.target.files);
 
-    const newImages = files.map((file) => URL.createObjectURL(file));
+  const formData = new FormData();
+  files.forEach((file) => formData.append("images", file));
 
-    // Add new previews to existing images
-    setProduct({
-      ...product,
-      images: [...product.images, ...newImages],
-    });
-  };
+  const res = await fetch("http://localhost:5300/api/upload/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await res.json(); // { urls: [...] }
+
+  setProduct((prev) => ({
+    ...prev,
+    images: [...prev.images, ...data.urls]
+  }));
+};
+
 
   // Remove image
   const removeImage = (index) => {
-    const updated = [...product.images];
-    updated.splice(index, 1);
-    setProduct({ ...product, images: updated });
+    setProduct((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
   };
 
   // Save handler
@@ -68,7 +92,7 @@ export default function EditProduct() {
     }
   };
 
-  if (!product) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Box sx={{ maxWidth: 800, mx: "auto", mt: 5 }}>
@@ -84,7 +108,7 @@ export default function EditProduct() {
               <TextField
                 label="Product Title"
                 fullWidth
-                value={product?.title}
+                value={product.title}
                 onChange={(e) =>
                   setProduct({ ...product, title: e.target.value })
                 }
@@ -98,32 +122,33 @@ export default function EditProduct() {
                 fullWidth
                 multiline
                 minRows={3}
-                value={product?.description}
+                value={product.description}
                 onChange={(e) =>
                   setProduct({ ...product, description: e.target.value })
                 }
               />
             </Grid>
 
-            {/* Price + Discount */}
+            {/* Price */}
             <Grid item xs={6}>
               <TextField
                 label="Price (₹)"
                 type="number"
                 fullWidth
-                value={product?.price}
+                value={product.price}
                 onChange={(e) =>
                   setProduct({ ...product, price: Number(e.target.value) })
                 }
               />
             </Grid>
 
+            {/* Discount Price */}
             <Grid item xs={6}>
               <TextField
                 label="Discount Price (₹)"
                 type="number"
                 fullWidth
-                value={product?.discountPrice || ""}
+                value={product.discountPrice}
                 onChange={(e) =>
                   setProduct({
                     ...product,
@@ -133,31 +158,12 @@ export default function EditProduct() {
               />
             </Grid>
 
-            {/* Category */}
-            {/* <Grid item xs={12}>
-              <TextField
-                label="Category"
-                select
-                fullWidth
-                value={product.category}
-                onChange={(e) =>
-                  setProduct({ ...product, category: e.target.value })
-                }
-              >
-                <MenuItem value="electronics">Electronics</MenuItem>
-                <MenuItem value="fashion">Fashion</MenuItem>
-                <MenuItem value="mobile">Mobile</MenuItem>
-                <MenuItem value="beauty">Beauty</MenuItem>
-              </TextField>
-            </Grid> */}
-
-            {/* Image Uploader */}
+            {/* Image Upload */}
             <Grid item xs={12}>
               <Typography variant="subtitle1" mb={1}>
                 Product Images
               </Typography>
 
-              {/* Upload Box */}
               <Box
                 sx={{
                   border: "2px dashed #bbb",
@@ -191,7 +197,7 @@ export default function EditProduct() {
                   mt: 2,
                 }}
               >
-                {product.images?.map((img, index) => (
+                {product.images.map((img, index) => (
                   <Box key={index} sx={{ position: "relative" }}>
                     <img
                       src={img}
@@ -204,21 +210,6 @@ export default function EditProduct() {
                         border: "1px solid #ddd",
                       }}
                     />
-
-                    {/* DELETE BUTTON */}
-                    <IconButton
-                      size="small"
-                      onClick={() => removeImage(index)}
-                      sx={{
-                        position: "absolute",
-                        top: -10,
-                        right: -10,
-                        background: "white",
-                        boxShadow: 2,
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" color="error" />
-                    </IconButton>
                   </Box>
                 ))}
               </Box>
