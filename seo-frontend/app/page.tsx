@@ -18,8 +18,9 @@ export default function Home() {
     <main>
       {/* <HeroSection /> */}
       <IndustrialSolutions />
-      <ReviewSection />
+      
       <Benefits />
+      <ReviewSection />
       <ProductContainer />
       <AnimatedReviewSection />
       

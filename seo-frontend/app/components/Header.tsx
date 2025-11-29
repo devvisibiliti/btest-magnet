@@ -15,53 +15,54 @@ const menus = {
     label: "METAL DETECTORS",
     columns: [
       {
-        title: "Handheld Metal Detectors",
+        title: "STONE CRUSHER",
         image: "/categories/tap1.png",
         links: [
-          { name: "Portable Detector", href: "#" },
-          { name: "Handheld Pro", href: "#" },
+          { name: "ORANGE COIL", href: "#" },
+          { name: "SIDE WAYS", href: "#" },
         ],
       },
       {
-        title: "Conveyor Metal Detectors",
+        title: "FOOD INDUSTRY",
         image: "/categories/tap1.png",
         links: [
-          { name: "Food Grade Conveyor", href: "#" },
-          { name: "Industrial Conveyor", href: "#" },
+          { name: "CONVEYOR TYPE", href: "#" },
+          { name: "GRAVITY FEED", href: "#" },
+          { name: "PIPE LINE", href: "#" },
         ],
       },
       {
-        title: "X-Ray Inspection",
+        title: "PHARMACHEUTICAL",
         image: "/categories/tap1.png",
         links: [
-          { name: "Small X-Ray", href: "#" },
-          { name: "Large X-Ray", href: "#" },
+          { name: "TABLET", href: "#" },
+          // { name: "Large X-Ray", href: "#" },
         ],
       },
       {
-        title: "Handheld Metal Detectors",
+        title: "TEXTILE INDUSTRY",
         image: "/categories/tap1.png",
         links: [
-          { name: "Portable Detector", href: "#" },
-          { name: "Handheld Pro", href: "#" },
+          { name: "NEEDLE", href: "#" },
+          { name: "FLAT TYPE", href: "#" },
         ],
       },
       {
-        title: "Handheld Metal Detectors",
+        title: "COAL AND CEMENT",
         image: "/categories/tap1.png",
         links: [
-          { name: "Portable Detector", href: "#" },
-          { name: "Handheld Pro", href: "#" },
+          { name: "PULSE INDUCTION", href: "#" },
+          // { name: "Handheld Pro", href: "#" },
         ],
       },
-      {
-        title: "Handheld Metal Detectors",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Portable Detector", href: "#" },
-          { name: "Handheld Pro", href: "#" },
-        ],
-      },
+      // {
+      //   title: "Handheld Metal Detectors",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Portable Detector", href: "#" },
+      //     { name: "Handheld Pro", href: "#" },
+      //   ],
+      // },
     ],
   },
 
@@ -69,7 +70,7 @@ const menus = {
     label: "MAGNETIC EQUIPMENTS",
     columns: [
       {
-        title: "Lifting Magnets",
+        title: "PERMENANT SUSPENSION MAGNET",
         image: "/categories/tap1.png",
         links: [
           { name: "Permanent Lifter", href: "#" },
@@ -77,7 +78,7 @@ const menus = {
         ],
       },
       {
-        title: "Magnetic Tools",
+        title: "PERMENANT OVERBAND MAGNETIC SEPERAOR",
         image: "/categories/tap1.png",
         links: [
           { name: "Magnetic Holders", href: "#" },
@@ -85,7 +86,17 @@ const menus = {
         ],
       },
       {
-        title: "Magnetic Separators",
+        title: "PERMENANT DRUM MAGNET SEPERATOR",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "SINGLE STAGE DRUM", href: "#" },
+          { name: "TWO STAGE DRUM", href: "#" },
+          { name: "THREE STAGE DRUM", href: "#" },
+          { name: "FOUR STAGE DRUM", href: "#" },
+        ],
+      },
+      {
+        title: "MAGNETIC DESTONER",
         image: "/categories/tap1.png",
         links: [
           { name: "Drum Separator", href: "#" },
@@ -93,27 +104,101 @@ const menus = {
         ],
       },
       {
-        title: "Magnetic Separators",
+        title: "HOPPER MAGNET",
         image: "/categories/tap1.png",
         links: [
-          { name: "Drum Separator", href: "#" },
-          { name: "Grate Magnet", href: "#" },
+          { name: "CIRCULAR MAGNETIC GRILL", href: "#" },
+          { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          { name: "SQUARE MAGNETIC GRILL", href: "#" },
         ],
       },
       {
-        title: "Magnetic Separators",
+        title: "PLATE MAGNET",
         image: "/categories/tap1.png",
         links: [
-          { name: "Drum Separator", href: "#" },
-          { name: "Grate Magnet", href: "#" },
+          { name: "this", href: "#" },
+          { name: "this", href: "#" },
         ],
       },
       {
-        title: "Magnetic Separators",
+        title: "HUMP MAGNET",
         image: "/categories/tap1.png",
         links: [
-          { name: "Drum Separator", href: "#" },
-          { name: "Grate Magnet", href: "#" },
+          { name: "This", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+        ],
+      },
+      {
+        title: "MAGNETIC FILTER",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "DRAWER MAGNETIC FILTER", href: "#" },
+          { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+          { name: "BULLET MAGNET", href: "#" },
+        ],
+      },
+      {
+        title: "MAGNETIC DESTONER",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "This", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+        ],
+      },
+      {
+        title: "MAGNETIC HEAD PULLY",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "this", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+        ],
+      },
+      {
+        title: "COOLANT MAGNETIC SEPERATOR",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "this", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+        ],
+      },
+      {
+        title: "MAGNETIC SWEEPERS",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "This", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+        ],
+      },
+      {
+        title: "MAGNETIC ROD",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "This", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+        ],
+      },
+      {
+        title: "HAND MAGNET",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "This", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+        ],
+      },
+      {
+        title: "ROLLER TYPE MAGNETIC SEPERATOR",
+        image: "/categories/tap1.png",
+        links: [
+          { name: "This", href: "#" },
+          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
         ],
       },
     ],
@@ -123,7 +208,7 @@ const menus = {
     label: "ELECTROMAGNETIC EQUIPMENTS",
     columns: [
       {
-        title: "Electromagnetic Lifters",
+        title: "SUSPENSION ELECRTOMAGNET",
         image: "/categories/tap1.png",
         links: [
           { name: "EM Lifter 1000", href: "#" },
@@ -131,7 +216,7 @@ const menus = {
         ],
       },
       {
-        title: "Control Panels",
+        title: "OVERBAND ELECTROMAGNETIC SEPERATOR",
         image: "/categories/tap1.png",
         links: [
           { name: "Digital Panel", href: "#" },
@@ -139,37 +224,37 @@ const menus = {
         ],
       },
       {
-        title: "Coils & Spares",
+        title: "CIRCULAR MAGNETIC LIFTER",
         image: "/categories/tap1.png",
         links: [
           { name: "Copper Coils", href: "#" },
           { name: "Cooling Units", href: "#" },
         ],
       },
-      {
-        title: "Coils & Spares",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Copper Coils", href: "#" },
-          { name: "Cooling Units", href: "#" },
-        ],
-      },
-      {
-        title: "Coils & Spares",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Copper Coils", href: "#" },
-          { name: "Cooling Units", href: "#" },
-        ],
-      },
-      {
-        title: "Coils & Spares",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Copper Coils", href: "#" },
-          { name: "Cooling Units", href: "#" },
-        ],
-      },
+      // {
+      //   title: "Coils & Spares",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Copper Coils", href: "#" },
+      //     { name: "Cooling Units", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Coils & Spares",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Copper Coils", href: "#" },
+      //     { name: "Cooling Units", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Coils & Spares",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Copper Coils", href: "#" },
+      //     { name: "Cooling Units", href: "#" },
+      //   ],
+      // },
     ],
   },
 
@@ -177,53 +262,53 @@ const menus = {
     label: "ELECTROPERMENANT MAGNETS",
     columns: [
       {
-        title: "EPM Lifting Systems",
+        title: "ELECTROPERMENANT MAGNETIC LIFTERS",
         image: "/categories/tap1.png",
         links: [
           { name: "Lifting Plate", href: "#" },
           { name: "Block Magnet", href: "#" },
         ],
       },
-      {
-        title: "Permanent Magnets",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "NdFeB Magnets", href: "#" },
-          { name: "Ferrite Magnets", href: "#" },
-        ],
-      },
-      {
-        title: "Industry Applications",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Fabrication", href: "#" },
-          { name: "Automotive", href: "#" },
-        ],
-      },
-      {
-        title: "Industry Applications",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Fabrication", href: "#" },
-          { name: "Automotive", href: "#" },
-        ],
-      },
-      {
-        title: "Industry Applications",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Fabrication", href: "#" },
-          { name: "Automotive", href: "#" },
-        ],
-      },
-      {
-        title: "Industry Applications",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Fabrication", href: "#" },
-          { name: "Automotive", href: "#" },
-        ],
-      },
+      // {
+      //   title: "Permanent Magnets",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "NdFeB Magnets", href: "#" },
+      //     { name: "Ferrite Magnets", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Industry Applications",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Fabrication", href: "#" },
+      //     { name: "Automotive", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Industry Applications",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Fabrication", href: "#" },
+      //     { name: "Automotive", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Industry Applications",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Fabrication", href: "#" },
+      //     { name: "Automotive", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Industry Applications",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Fabrication", href: "#" },
+      //     { name: "Automotive", href: "#" },
+      //   ],
+      // },
     ],
   },
 
@@ -231,7 +316,7 @@ const menus = {
     label: "VIBRATORY EQUIPMENTS",
     columns: [
       {
-        title: "Feeders",
+        title: "LINEAR VIBRATORY FEEDER",
         image: "/categories/tap1.png",
         links: [
           { name: "Vibratory Feeder", href: "#" },
@@ -239,7 +324,7 @@ const menus = {
         ],
       },
       {
-        title: "Screens",
+        title: "VIBRATORY PAN FEEDER",
         image: "/categories/tap1.png",
         links: [
           { name: "Vibrating Screen", href: "#" },
@@ -247,37 +332,39 @@ const menus = {
         ],
       },
       {
-        title: "Accessories",
+        title: "VIBRO SIFTER",
         image: "/categories/tap1.png",
         links: [
-          { name: "Mounts", href: "#" },
-          { name: "Controllers", href: "#" },
+          { name: "FOOD INDUSTRY", href: "#" },
+          { name: "PHARMACUAUTICAL", href: "#" },
+          { name: "ULTRASONIC VIBRO", href: "#" },
+          { name: "BIN ACTIVATOR", href: "#" },
         ],
       },
       {
-        title: "Accessories",
+        title: "TABLET DEDUSTER",
         image: "/categories/tap1.png",
         links: [
-          { name: "Mounts", href: "#" },
-          { name: "Controllers", href: "#" },
+          { name: "this", href: "#" },
+          
         ],
       },
-      {
-        title: "Accessories",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Mounts", href: "#" },
-          { name: "Controllers", href: "#" },
-        ],
-      },
-      {
-        title: "Accessories",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Mounts", href: "#" },
-          { name: "Controllers", href: "#" },
-        ],
-      },
+      // {
+      //   title: "Accessories",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Mounts", href: "#" },
+      //     { name: "Controllers", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Accessories",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Mounts", href: "#" },
+      //     { name: "Controllers", href: "#" },
+      //   ],
+      // },
     ],
   },
 
@@ -285,53 +372,53 @@ const menus = {
     label: "MIXING EQUIPMENTS",
     columns: [
       {
-        title: "Industrial Mixers",
+        title: "PADDLE MIXER",
         image: "/categories/tap1.png",
         links: [
-          { name: "Ribbon Blender", href: "#" },
-          { name: "Paddle Mixer", href: "#" },
+          { name: "SINGLE SHAFT", href: "#" },
+          { name: "TWIN SHAFT", href: "#" },
         ],
       },
       {
-        title: "Powder Handling",
+        title: "RIBBON BLENDER",
         image: "/categories/tap1.png",
         links: [
           { name: "Hoppers", href: "#" },
-          { name: "Silos", href: "#" },
+          // { name: "Silos", href: "#" },
         ],
       },
-      {
-        title: "Services",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Maintenance", href: "#" },
-          { name: "Installation", href: "#" },
-        ],
-      },
-      {
-        title: "Services",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Maintenance", href: "#" },
-          { name: "Installation", href: "#" },
-        ],
-      },
-      {
-        title: "Services",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Maintenance", href: "#" },
-          { name: "Installation", href: "#" },
-        ],
-      },
-      {
-        title: "Services",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Maintenance", href: "#" },
-          { name: "Installation", href: "#" },
-        ],
-      },
+      // {
+      //   title: "Services",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Maintenance", href: "#" },
+      //     { name: "Installation", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Services",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Maintenance", href: "#" },
+      //     { name: "Installation", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Services",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Maintenance", href: "#" },
+      //     { name: "Installation", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Services",
+      //   image: "/categories/tap1.png",
+      //   links: [
+      //     { name: "Maintenance", href: "#" },
+      //     { name: "Installation", href: "#" },
+      //   ],
+      // },
     ],
   },
 };
@@ -367,7 +454,7 @@ export default function Header() {
           </Link> */}
 
           {/* DESKTOP NAV */}
-          <nav className="hidden md:flex gap-8 items-center font-medium font-family: 'Roboto', sans-serif; line-height: 2.5rem;
+          <nav className="hidden md:flex gap-8 items-center font-medium font-family: 'poppins', sans-serif; line-height: 2.5rem;
     font-weight: 500; font-semibold ">
 
             <Link href="/" className="hover:text-blue-600">Home</Link>

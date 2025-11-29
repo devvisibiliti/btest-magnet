@@ -41,7 +41,7 @@ export default function CategoryPage() {
                 {p.price}
               </p>
 
-              <Link href={`/products/view/${p.slug}`} className="amazon-button">
+              <Link href={`/admin/products/view/${p._id}`} className="amazon-button">
                 View Product
               </Link>
             </div>

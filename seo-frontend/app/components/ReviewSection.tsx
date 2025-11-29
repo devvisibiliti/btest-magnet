@@ -23,56 +23,56 @@ const reviews: Review[] = [
 //   },
   {
     id: "2",
-    name: "Hand Held Metal Detector",
+    name: "METAL DETECTOR",
     // role: "Member",
-    avatar: "/images/home/hand-held-metal-detector.jpg",
+    avatar: "/images/products/METAL-DETECTOR- FOR- TEXTILE- INDUSTRY.webp",
     text:
-      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
+      "Stone crusher metal detector can detect Fe, non-Fe and SS contaminates. Stone crusher metal detector works under the principle of electromagnetic induction. Stone crusher metal detector is ideal to use under harsh conditions.",
     pos: { left: "20%", top: "50%" },
   },
   {
     id: "3",
-    name: "Hand Held Metal Detector",
+    name: "MAGNETIC EQUIPMENTS",
     // role: "Member",
-    avatar: "/images/home/hand-held-metal-detector.jpg",
+    avatar: "/images/products/MAGNETIC-ROD.webp",
     text:
-      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
+      "We are engaged in the manufacture and export of a wide array of industrial magnetic equipment. Our products are characterized by immaculate designs, superior functionality, and long term service.",
     pos: { left: "5%", top: "40%" },
   },
   {
     id: "4",
-    name: "Hand Held Metal Detector",
+    name: "ELECTROMAGNETIC EQUIPMENTS",
     // role: "Member",
-    avatar: "/images/home/hand-held-metal-detector.jpg",
+    avatar: "/images/products/ELECTROPERMEN-ANT-MAGNETIC-LIFTERS.webp",
     text:
-      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
+      "Our company is widely appreciated in offering Electromagnetic Suspension",
     pos: { left: "10%", top: "80%" },
   },
   {
     id: "5",
-    name: "Hand Held Metal Detector",
+    name: "ELECTROPERMENANT MAGNETS",
     // role: "Member",
-    avatar: "/images/home/hand-held-metal-detector.jpg",
+    avatar: "/images/products/electro-permanent-magnetic-filter.webp",
     text:
-      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
+      "Electro Permanent  Magnetic lifter is combination of permanent as well as electro magnet power which is required to clamp the job or declamp the job.",
     pos: { left: "95%", top: "40%" },
   },
   {
     id: "6",
-    name: "Hand Held Metal Detector",
+    name: "VIBRATORY EQUIPMENTS",
     // role: "Member",
-    avatar: "/images/home/hand-held-metal-detector.jpg",
+    avatar: "/images/products/LINEAR-VIBRATORY- FEEDER.webp",
     text:
-      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
+      "Our professionals manufacture these feeders using superior quality raw materials and sophisticated technology. They procure these materials from trustworthy vendors who have been working with us since long time.",
     pos: { left: "80%", top: "50%" },
   },
   {
     id: "7",
-    name: "Hand Held Metal Detector",
+    name: "MIXING EQUIPMENTS",
     // role: "Member",
-    avatar: "/images/home/hand-held-metal-detector.jpg",
+    avatar: "/images/products/PADDLE-MIXER-equipment.webp",
     text:
-      "MAP and MRP are pneumatically controlled neodymium permanent magnets, which have excellent size / gripping force ratio and extremely low residual magnetism",
+      "We are engaged in the manufacture and export of a wide array of industrial magnetic equipment. Our products are characterized by immaculate designs, superior functionality, and long term service",
     pos: { left: "90%", top: "80%" },
   },
 ];
@@ -123,9 +123,9 @@ export default function ReviewSection() {
   return (
     <section className="max-w-6xl mx-auto p-4 md:my-20">
       <h2 className="text-3xl font-bold text-center mb-2">
-        Magnetronix
+        Our Product Categories
       </h2>
-      <p className="text-center text-lg">Here what they have to say.</p>
+      {/* <p className="text-center text-lg">Here what they have to say.</p> */}
 
       <div className="relative h-[600px] md:h-[300px]">
         {/* Avatar cluster layer (absolute container) */}
