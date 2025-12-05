@@ -1,5 +1,5 @@
 "use client";
-import {use} from "react";
+import { use } from "react";
 import { useEffect, useState, useRef } from "react";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,12 +7,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation, Thumbs, Pagination } from "swiper/modules";
 
-
-
 export default function ProductDetailPage({ params }) {
   const { id } = use(params);
-
- 
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
@@ -22,7 +18,7 @@ export default function ProductDetailPage({ params }) {
 
   const mainImageRef = useRef(null);
   const zoomBoxRef = useRef(null);
-   SwiperCore.use([Navigation, Thumbs, Pagination]);
+  SwiperCore.use([Navigation, Thumbs, Pagination]);
 
   // ----------------------------------------------------
   // 1. Fetch Product
@@ -31,7 +27,6 @@ export default function ProductDetailPage({ params }) {
     fetch(`http://localhost:5300/api/products/${id}`)
       .then((r) => r.json())
       .then((data) => {
-        console.log("PRODUCT RESPONSE:", data);
         setProduct(data);
 
         // Fetch related
@@ -94,7 +89,7 @@ export default function ProductDetailPage({ params }) {
   };
 
   // ----------------------------------------------------
-  // 5. Stars
+  // 5. Rating
   // ----------------------------------------------------
   const avgRating =
     product.reviews?.length > 0
@@ -115,23 +110,28 @@ export default function ProductDetailPage({ params }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-
       {/* ----------------------------------------------------
         BREADCRUMB
       ---------------------------------------------------- */}
       <div className="text-sm text-gray-500 mb-4">
-        <a href="/" className="hover:underline">Home</a> /{" "}
-        <a href={`/category/${product.category}`} className="hover:underline">{product.category}</a>{" "}
+        <a href="/" className="hover:underline">
+          Home
+        </a>{" "}
+        /{" "}
+        <a
+          href={`/category/${product.category}`}
+          className="hover:underline"
+        >
+          {product.category}
+        </a>{" "}
         / <span className="text-black">{product.title}</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
         {/* ----------------------------------------------------
           LEFT SECTION (Images)
         ---------------------------------------------------- */}
         <div className="lg:col-span-7">
-
           {/* Main image + zoom */}
           <div
             className="relative border rounded-lg bg-white p-4"
@@ -147,7 +147,10 @@ export default function ProductDetailPage({ params }) {
             >
               {product?.images?.map((img, i) => (
                 <SwiperSlide key={i}>
-                  <img src={img} className="w-full h-[450px] object-contain" />
+                  <img
+                    src={img}
+                    className="w-full h-[450px] object-contain"
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -180,57 +183,86 @@ export default function ProductDetailPage({ params }) {
             </Swiper>
           </div>
 
-          {/* SPECIFICATIONS & TAGS */}
+          {/* ----------------------------------------------------
+            SPECIFICATIONS & TAGS
+          ---------------------------------------------------- */}
           <div className="mt-6 bg-white p-5 rounded shadow">
             <div className="flex gap-6 border-b pb-3">
               <button
                 className={`pb-2 ${
-                  activeSpecTab === "specs" ? "border-b-2 border-blue-500" : ""
+                  activeSpecTab === "specs"
+                    ? "border-b-2 border-blue-500"
+                    : ""
                 }`}
                 onClick={() => setActiveSpecTab("specs")}
               >
                 Specifications
               </button>
+
               <button
-                className={`pb-2 ${
-                  activeSpecTab === "tags" ? "border-b-2 border-blue-500" : ""
-                }`}
-                onClick={() => setActiveSpecTab("tags")}
-              >
-                Tags
-              </button>
+  className={`pb-2 ${
+    activeSpecTab === "description"
+      ? "border-b-2 border-blue-500"
+      : ""
+  }`}
+  onClick={() => setActiveSpecTab("description")}
+>
+  Description
+</button>
+
             </div>
 
-            {activeSpecTab === "specs" ? (
-              <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
-                {product.specs
-                  ? Object.entries(product.specs).map(([k, v]) => (
-                      <div key={k} className="flex justify-between border-b pb-2">
-                        <span>{k}</span>
-                        <span className="font-semibold">{String(v)}</span>
-                      </div>
-                    ))
-                  : "No specs added"}
-              </div>
-            ) : (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {product.tags?.length
-                  ? product.tags.map((tag) => (
-                      <span key={tag} className="px-2 py-1 bg-gray-200 text-xs rounded">{tag}</span>
-                    ))
-                  : "No tags added"}
-              </div>
-            )}
+            {/* ⭐ Specifications Table */}
+{activeSpecTab === "specs" ? (
+  // ⭐ Specifications Table
+  <div className="mt-4 text-sm">
+    {product.specs?.length > 0 ? (
+      <table className="w-full">
+        <tbody>
+          {product.specs.map((row, i) => (
+            <tr key={i} className="border-b">
+              <td className="py-2 font-medium w-1/2">{row.key}</td>
+              <td className="py-2">{row.value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p className="text-gray-500 mt-2">No specifications added</p>
+    )}
+  </div>
+) : (
+  // ⭐ Description Tab
+ <div className="mt-6 bg-white p-5 rounded shadow">
+  <h3 className="text-lg font-semibold mb-3">Product Description</h3>
+
+  {product.productDescription ? (
+    <div
+      className="prose prose-sm max-w-none"
+      dangerouslySetInnerHTML={{ __html: product.productDescription }}
+    />
+  ) : (
+    <p className="text-gray-500">No description available</p>
+  )}
+</div>
+
+)}
+
+
           </div>
 
-          {/* REVIEWS */}
+          {/* ----------------------------------------------------
+            REVIEWS
+          ---------------------------------------------------- */}
           <div className="mt-6 bg-white p-6 rounded shadow">
             <h3 className="text-xl font-semibold mb-4">Customer Reviews</h3>
 
             <div className="flex items-center gap-3">
               <span className="text-3xl font-bold">{avgRating.toFixed(1)}</span>
               <Stars value={avgRating} />
-              <span className="text-gray-500 text-sm">({product?.reviews?.length})</span>
+              <span className="text-gray-500 text-sm">
+                ({product?.reviews?.length})
+              </span>
             </div>
 
             <div className="mt-4">
@@ -252,7 +284,6 @@ export default function ProductDetailPage({ params }) {
               )}
             </div>
           </div>
-
         </div>
 
         {/* ----------------------------------------------------
@@ -260,7 +291,6 @@ export default function ProductDetailPage({ params }) {
         ---------------------------------------------------- */}
         <div className="lg:col-span-5">
           <div className="sticky top-24 space-y-6">
-
             <div className="bg-white p-6 rounded shadow">
               <h1 className="text-2xl font-semibold">{product.title}</h1>
 
@@ -268,7 +298,9 @@ export default function ProductDetailPage({ params }) {
               <div className="flex gap-3 mt-3 text-sm">
                 <a
                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                    typeof window !== "undefined" ? window.location.href : ""
+                    typeof window !== "undefined"
+                      ? window.location.href
+                      : ""
                   )}`}
                   target="_blank"
                   className="px-3 py-1 bg-blue-600 text-white rounded"
@@ -276,21 +308,25 @@ export default function ProductDetailPage({ params }) {
                   Facebook
                 </a>
 
-                <a
+                {/* <a
                   href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                    typeof window !== "undefined" ? window.location.href : ""
+                    typeof window !== "undefined"
+                      ? window.location.href
+                      : ""
                   )}&text=${encodeURIComponent(product.title)}`}
                   target="_blank"
                   className="px-3 py-1 bg-sky-500 text-white rounded"
                 >
                   Twitter
-                </a>
+                </a> */}
 
                 <a
                   href={`https://wa.me/?text=${encodeURIComponent(
                     product.title +
                       " " +
-                      (typeof window !== "undefined" ? window.location.href : "")
+                      (typeof window !== "undefined"
+                        ? window.location.href
+                        : "")
                   )}`}
                   target="_blank"
                   className="px-3 py-1 bg-green-600 text-white rounded"
@@ -312,6 +348,7 @@ export default function ProductDetailPage({ params }) {
 
               <p className="text-gray-700 mt-3">{product.description}</p>
 
+              {/* QTY */}
               <div className="flex items-center gap-3 mt-6">
                 <button
                   className="px-4 py-2 bg-gray-200 rounded"
@@ -329,12 +366,6 @@ export default function ProductDetailPage({ params }) {
               </div>
 
               <div className="flex gap-4 mt-6">
-                {/* <button
-                  onClick={addToCart}
-                  className="flex-1 bg-yellow-500 py-3 rounded font-semibold"
-                >
-                  Add to Cart
-                </button> */}
                 <button
                   onClick={buyNow}
                   className="flex-1 bg-orange-600 text-white py-3 rounded font-semibold"
@@ -347,9 +378,10 @@ export default function ProductDetailPage({ params }) {
             <div className="bg-white p-5 rounded shadow text-sm">
               <h4 className="font-semibold">Sold by</h4>
               <p className="text-gray-700 mt-1">Magnetronix Official Store</p>
-              <p className="text-gray-500 mt-2">Free Delivery • Easy Returns</p>
+              <p className="text-gray-500 mt-2">
+                Free Delivery • Easy Returns
+              </p>
             </div>
-
           </div>
         </div>
       </div>
@@ -391,15 +423,15 @@ export default function ProductDetailPage({ params }) {
           <p>No related products found.</p>
         )}
       </div>
-      
 
       {/* ----------------------------------------------------
         MOBILE ONLY STICKY BOTTOM BAR
       ---------------------------------------------------- */}
       <div className="fixed bottom-0 left-0 w-full bg-white border-t shadow-lg p-3 flex items-center justify-between md:hidden z-50">
-
         <div>
-          <div className="text-lg font-bold text-red-600">₹{product.price}</div>
+          <div className="text-lg font-bold text-red-600">
+            ₹{product.price}
+          </div>
           {product.discountPrice && (
             <div className="text-xs text-gray-400 line-through">
               ₹{product.discountPrice}
@@ -438,6 +470,5 @@ export default function ProductDetailPage({ params }) {
         </button>
       </div>
     </div>
-    
   );
 }

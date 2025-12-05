@@ -129,7 +129,7 @@ export default function ReviewSection() {
 
       <div className="relative h-[600px] md:h-[300px]">
         {/* Avatar cluster layer (absolute container) */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 justify-content">
           {reviews.map((r, i) => {
             const active = i === activeIndex;
             return (

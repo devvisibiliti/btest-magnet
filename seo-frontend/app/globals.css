@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 /* in globals.css or imported at app root */
 @import "swiper/css";
@@ -5,10 +6,36 @@
 @import "swiper/css/thumbs";
 @import "swiper/css/pagination";
 
+/* ===========================
+   Global Typography System
+=========================== */
+
+:root {
+  --font-size-h1: 2.25rem; /* 36px */
+  --font-size-h2: 1.875rem; /* 30px */
+  --font-size-h3: 1.5rem; /* 24px */
+  --font-size-h4: 1.25rem; /* 20px */
+  --font-size-p: 1rem; /* 16px */
+  --font-size-menu: 0.95rem; /* 15px */
+
+  --line-height-heading: 1.25;
+  --line-height-body: 1.6;
+}
+
+/* Default body font */
+body {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-p);
+  line-height: var(--line-height-body);
+  color: #111;
+  margin: 0;
+  padding: 0;
+}
+
 
 :root {
   --background: #ffffff;
-  --foreground: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -19,12 +46,20 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #170c0c;
-    --foreground: #110b0b;
+    --background: #ffffff;
+    --foreground: #ffffff;
   }
 }
+/* .font-heading {
+  font-family: var(--heading-font)
+} */
+/* .font-header {
+  font-family: var(--header-font), sans-serif;
+} */
+
 body {
-  font-family: Arial, sans-serif;
+  /* font-family: "Noto-sans", sans-serif; */
+  /* font-family: var(--header-font), sans-serif; */
   margin: 0;
   padding: 0;
 }
@@ -37,6 +72,55 @@ main {
   color: blue;
   text-decoration: none;
 } */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font), sans-serif;
+  line-height: var(--line-height-heading);
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #000000;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+p {
+  font-size: var(--font-size-p);
+  margin-bottom: 14px;
+}
+
+.mega-menu-title {
+  font-family: var(--heading-font), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.mega-menu-link {
+  font-family: var(--header-font), sans-serif;
+  font-size: 0.9rem;
+  color: #444;
+  font-weight: 400;
+}
+
+.mega-menu-link:hover {
+  color: #0052cc;
+}
+
+
 
 a:hover {
   text-decoration: underline;
@@ -100,6 +184,12 @@ a:hover {
 .animate-scaleUp {
   animation: scaleUp 0.4s ease forwards;
 }
+.font-menu {
+  font-family: var(--header-font), sans-serif;
+  font-size: var(--font-size-menu);
+  font-weight: 500;
+}
+
 
 /* ---------------- AMAZON STYLE PAGE-Category ---------------- */
 

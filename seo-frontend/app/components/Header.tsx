@@ -16,7 +16,7 @@ const menus = {
     columns: [
       {
         title: "STONE CRUSHER",
-        image: "/categories/tap1.png",
+        image: "/categories/magnotronix.png",
         links: [
           { name: "ORANGE COIL", href: "#" },
           { name: "SIDE WAYS", href: "#" },
@@ -428,7 +428,7 @@ const menus = {
 --------------------------------------------------------- */
 const alignmentMap: Record<string, "left" | "center" | "right"> = {
   metal: "left",
-  magnetic: "center",
+  magnetic: "left",
   electromagnetic: "center",
   electroperm: "center",
   vibratory: "right",
@@ -444,7 +444,7 @@ export default function Header() {
   return (
     <>
       {/* HEADER */}
-      <header className="sticky top-0 z-50 bg-white shadow-md">
+      <header className="font-heading sticky top-0 z-50 bg-white shadow-md">
         <div className="container height:200px mx-auto flex items-center justify-between py-6 px-4">
 
           {/* LOGO */}
@@ -454,10 +454,10 @@ export default function Header() {
           </Link> */}
 
           {/* DESKTOP NAV */}
-          <nav className="hidden md:flex gap-8 items-center font-medium font-family: 'poppins', sans-serif; line-height: 2.5rem;
-    font-weight: 500; font-semibold ">
+          <nav className="font-menu hidden md:flex gap-8 items-center font-medium font-family: Roboto, sans-serif; line-height: 2.5rem;
+    font-weight: 300; font-semibold ">
 
-            <Link href="/" className="hover:text-blue-600">Home</Link>
+            <Link href="/" className="hover:text-blue-600">HOME</Link>
 
             {/* LOOP SIX CATEGORIES */}
             {(Object.keys(menus) as string[]).map((key) => {
@@ -481,6 +481,7 @@ export default function Header() {
       <button className="hover:text-blue-600">
         {menu.label}
       </button>
+      
 
       {isOpen && (
         <>
@@ -488,10 +489,14 @@ export default function Header() {
           <div className="absolute left-0 w-full h-6 top-full"></div>
 
           <div
-            className={`absolute ${alignment} mt-6 top-full w-[900px] 
-                        rounded-lg bg-white shadow-xl z-50 pb-10 pt-5 border`}
-          >
-            <div className="grid grid-cols-3 gap-6">
+  className={`absolute ${alignment} mt-6 top-full 
+              min-w-[800px] max-w-[1200px] overflow-x-auto
+              rounded-lg bg-white shadow-xl z-50 pb-10 pt-5 border`}
+>
+
+            <div className="grid grid-cols-3 gap-6 
+                max-h-[60vh] overflow-y-auto 
+                p-5 pr-2 custom-scrollbar max-w-[900px] p-5">
               {menu.columns.map((col, idx) => (
                 <div key={idx} className="flex gap-4">
                   <Image
@@ -502,7 +507,7 @@ export default function Header() {
                     className="rounded-md object-cover"
                   />
                   <div>
-                    <p className="font-semibold">{col.title}</p>
+                    <p className="mega-menu-title font-semibold">{col.title}</p>
                     <div className="flex flex-col mt-2 gap-1">
                       {col.links.map((l, j) => (
                         <Link
@@ -526,8 +531,8 @@ export default function Header() {
 })}
 
 
-            <Link href="/about" className="hover:text-blue-600">About</Link>
-            <Link href="/contact" className="hover:text-blue-600">Contact</Link>
+            <Link href="/about" className="hover:text-blue-600">ABOUT</Link>
+            <Link href="/contact" className="hover:text-blue-600">CONTACT</Link>
           </nav>
 
           {/* DARK MODE + MOBILE ICON */}

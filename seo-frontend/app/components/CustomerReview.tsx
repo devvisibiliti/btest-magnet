@@ -79,18 +79,18 @@ export default function AnimatedReviewSection() {
         >
           <p className="text-white text-lg italic mb-6">{reviews[active].text}</p>
 
-          <div className="flex text-white items-center justify-center gap-4">
+          <div className="flex text-white-500 items-center justify-center gap-4">
             <img
               src={reviews[active].avatar}
               alt={reviews[active].name}
-              className="
+              className="text-green-500
                 w-16 h-16 rounded-full object-cover shadow-md
                 border-4 border-blue-500
                 animate-scaleUp
               "/>
 
             <div className="text-left">
-              <h3 className="text-xl font-semibold">{reviews[active].name}</h3>
+              <h3 className="text-xl text-white font-semibold">{reviews[active].name}</h3>
               {/* <p className="text-white text-sm">{reviews[active].role}</p> */}
             </div>
           </div>

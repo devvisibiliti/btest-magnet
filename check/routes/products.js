@@ -21,18 +21,30 @@ router.get("/", async (req, res) => {
 // -------------------------------------------------------
 router.post("/", async (req, res) => {
   try {
-    const { title, description, price, discountPrice, category, images = [], stock = 1 } = req.body;
+    const {
+      title,
+      description,
+      productDescription,
+      price,
+      discountPrice,
+      category,
+      images = [],
+      stock = 1,
+      specs = [],   // 👉 get specs from body
+    } = req.body;
 
     const slug = slugify(title, { lower: true });
 
     const product = await Product.create({
       title,
       description,
+      productDescription,
       price,
       discountPrice,
       category,
       images,
       stock,
+      specs,   // 👉 save specs too
       slug,
     });
 
@@ -42,6 +54,8 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: "Failed to add product" });
   }
 });
+
+
 
 // -------------------------------------------------------
 // GET PRODUCT BY ID  ← REQUIRED FOR ADMIN VIEW
