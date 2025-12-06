@@ -16,7 +16,7 @@ const menus = {
     columns: [
       {
         title: "STONE CRUSHER",
-        image: "/categories/magnotronix.png",
+        image: "/images/headericon/METAL-DETECTORS-FOR-COAL-AND-CEMENT-INDUSTRY.webp",
         links: [
           { name: "ORANGE COIL", href: "#" },
           { name: "SIDE WAYS", href: "#" },
@@ -24,7 +24,7 @@ const menus = {
       },
       {
         title: "FOOD INDUSTRY",
-        image: "/categories/tap1.png",
+        image: "/images/headericon/food.png",
         links: [
           { name: "CONVEYOR TYPE", href: "#" },
           { name: "GRAVITY FEED", href: "#" },
@@ -33,7 +33,7 @@ const menus = {
       },
       {
         title: "PHARMACHEUTICAL",
-        image: "/categories/tap1.png",
+        image: "/images/headericon/pharma.png",
         links: [
           { name: "TABLET", href: "#" },
           // { name: "Large X-Ray", href: "#" },
@@ -41,7 +41,7 @@ const menus = {
       },
       {
         title: "TEXTILE INDUSTRY",
-        image: "/categories/tap1.png",
+        image: "/images/headericon/textile.png",
         links: [
           { name: "NEEDLE", href: "#" },
           { name: "FLAT TYPE", href: "#" },
@@ -49,7 +49,7 @@ const menus = {
       },
       {
         title: "COAL AND CEMENT",
-        image: "/categories/tap1.png",
+        image: "/images/headericon/coalandcement.webp",
         links: [
           { name: "PULSE INDUCTION", href: "#" },
           // { name: "Handheld Pro", href: "#" },
@@ -498,13 +498,13 @@ export default function Header() {
                 max-h-[60vh] overflow-y-auto 
                 p-5 pr-2 custom-scrollbar max-w-[900px] p-5">
               {menu.columns.map((col, idx) => (
-                <div key={idx} className="flex gap-4">
+                <div key={idx} className="flex gap-4 items-start">
                   <Image
                     src={col.image}
                     width={64}
                     height={64}
                     alt={col.title}
-                    className="rounded-md object-cover"
+                    className="rounded-md object-contain flex-shrink-0"
                   />
                   <div>
                     <p className="mega-menu-title font-semibold">{col.title}</p>
