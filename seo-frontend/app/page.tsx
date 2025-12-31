@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Home | Your Brand",
+  title: "Home | Magnetronix",
   description: "Best products and services for your customers.",
 };
 

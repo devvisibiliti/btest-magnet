@@ -114,8 +114,7 @@ export default function AnimatedReviewSection() {
               <img
                 src={r.avatar}
                 alt={r.name}
-                className="w-full h-full object-cover"
-              />
+                className="w-full h-full object-cover"/>
             </div>
             <p
               className={`text-sm mt-2 transition-opacity ${
