@@ -19,8 +19,8 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: "Your Website",
-  description: "SEO friendly site built with Next.js",
+  title: "Magnetronix Website",
+  description: "Magnetronix Website",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
