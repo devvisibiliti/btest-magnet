@@ -74,7 +74,6 @@ export default function ProductContainer() {
           Explore our top-performing product categories
         </p>
       </div>
-
       <div className="grid gap-8 sm:gap-10 md:grid-cols-3 xl:grid-cols-3">
         {cards.map((card, index) => (
           <Link
@@ -86,8 +85,7 @@ export default function ProductContainer() {
     overflow-hidden rounded-3xl 
     bg-white shadow-lg border border-yellow-300/30
     hover:shadow-2xl hover:border-yellow-400/70
-    transition-all duration-500
-  "
+    transition-all duration-500 "
 >
 
   {/* Background Image */}

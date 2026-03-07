@@ -89,6 +89,7 @@ import adRouter from "./routes/adRoutes.js";
 import productsRoutes from "./routes/products.js";
 import categoriesRoutes from "./routes/categories.js";
 import uploadRoutes from "./routes/upload.js";
+import uploadImage from "./routes/uploadRoute.js"
 
 const app = express();
 
@@ -124,6 +125,7 @@ app.use("/ad", adRouter);
 app.use("/api/products", productsRoutes);
 app.use("/api/categories", categoriesRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/uploadimage", uploadImage)
 
 // Health route
 app.get("/health", (req, res) => res.json({ ok: true }));

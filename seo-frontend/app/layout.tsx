@@ -3,10 +3,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SuperHeader from "./components/SuperHeader";
 import { Poppins, Roboto } from "next/font/google";
-{/* <link
+{ <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-/> */}
+/> }
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "600"],
@@ -20,7 +20,7 @@ const roboto = Roboto({
 
 export const metadata = {
   title: "Magnetronix Website",
-  description: "Magnetronix Website",
+  description: "Magnetronix",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

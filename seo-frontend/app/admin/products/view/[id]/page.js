@@ -216,6 +216,7 @@ export default function ProductDetailPage({ params }) {
 {activeSpecTab === "specs" ? (
   // ⭐ Specifications Table
   <div className="mt-4 text-sm">
+    
     {product.specs?.length > 0 ? (
       <table className="w-full">
         <tbody>

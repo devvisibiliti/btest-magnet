@@ -1,548 +1,582 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import { FaMoon, FaSun } from "react-icons/fa";
+import SearchBar from "./SearchBar";
 
-/* ---------------------------------------------------------
-   MENU DATA (6 categories, each with its own mega menu)
---------------------------------------------------------- */
-const menus = {
-  metal: {
-    label: "METAL DETECTORS",
+/* ================================
+   TYPES
+================================ */
+
+type MenuLink = {
+  name: string;
+  href: string;
+};
+
+type MenuGroup = {
+  subtitle?: string;
+  links: MenuLink[];
+};
+
+type MenuColumn = {
+  title: string;
+  href?: string;
+  image?: string;
+  links?: MenuLink[]; // for simple structure
+  groups?: MenuGroup[]; // for multiple subtitles
+};
+
+type MenuCategory = {
+  label: string;
+  labelHref?: string;
+  columns: MenuColumn[];
+};
+
+/* ================================
+   MENU DATA
+================================ */
+
+const menus: Record<string, MenuCategory> = {
+  company: {
+    label: "COMPANY",
     columns: [
-      {
-        title: "STONE CRUSHER",
-        image: "/images/headericon/METAL-DETECTORS-FOR-COAL-AND-CEMENT-INDUSTRY.webp",
-        links: [
-          { name: "ORANGE COIL", href: "#" },
-          { name: "SIDE WAYS", href: "#" },
-        ],
-      },
-      {
-        title: "FOOD INDUSTRY",
-        image: "/images/headericon/food.png",
-        links: [
-          { name: "CONVEYOR TYPE", href: "#" },
-          { name: "GRAVITY FEED", href: "#" },
-          { name: "PIPE LINE", href: "#" },
-        ],
-      },
-      {
-        title: "PHARMACHEUTICAL",
-        image: "/images/headericon/pharma.png",
-        links: [
-          { name: "TABLET", href: "#" },
-          // { name: "Large X-Ray", href: "#" },
-        ],
-      },
-      {
-        title: "TEXTILE INDUSTRY",
-        image: "/images/headericon/textile.png",
-        links: [
-          { name: "NEEDLE", href: "#" },
-          { name: "FLAT TYPE", href: "#" },
-        ],
-      },
-      {
-        title: "COAL AND CEMENT",
-        image: "/images/headericon/coalandcement.webp",
-        links: [
-          { name: "PULSE INDUCTION", href: "#" },
-          // { name: "Handheld Pro", href: "#" },
-        ],
-      },
-      // {
-      //   title: "Handheld Metal Detectors",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Portable Detector", href: "#" },
-      //     { name: "Handheld Pro", href: "#" },
-      //   ],
-      // },
+      { title: "About", href: "/about" },
+      { title: "History", href: "/history" },
+      { title: "Quality and Certification", href: "/quality" },
+      { title: "Mission, Vision and Values", href: "/values" },
     ],
   },
 
-  magnetic: {
-    label: "MAGNETIC EQUIPMENTS",
+  equipment: {
+    label: "EQUIPMENT",
     columns: [
       {
-        title: "PERMENANT SUSPENSION MAGNET",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Permanent Lifter", href: "#" },
-          { name: "Power Lifter", href: "#" },
+        title: "METAL DETECTORS",
+        groups: [
+          {
+            subtitle: "Metal detectors for stone crusher industry",
+            links: [
+              { name: "ORANGE COIL METAL DETECTOR", href: "#" },
+              { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "Metal detectors for food industry",
+            links: [
+              { name: "CONVEYOR TYPE METAL DETECTOR", href: "#" },
+              { name: "GRAVITY FEED METAL DETECTOR", href: "#" },
+              { name: "PIPE LINE METAL DETECTOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "METAL DETECTOR FOR PHARMACHEUTICAL INDUSTRY",
+            links: [
+              { name: "TABLET METAL DETECTOR", href: "#" },
+              
+            ],
+          },
+          {
+            subtitle: "METAL DETECTOR FOR TEXTILE INDUSTRY",
+            links: [
+              { name: "NEEDLE METAL DETECTOR", href: "#" },
+              { name: "FLAT TYPE METAL DETECOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "METAL DETECTORS FOR COAL AND CEMENT INDUSTRY",
+            links: [
+              { name: "PULSE INDUCTION METAL DETECTOR", href: "#" },
+              
+            ],
+          },
         ],
       },
       {
-        title: "PERMENANT OVERBAND MAGNETIC SEPERAOR",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Magnetic Holders", href: "#" },
-          { name: "Magnetic Bases", href: "#" },
-        ],
-      },
-      {
-        title: "PERMENANT DRUM MAGNET SEPERATOR",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "SINGLE STAGE DRUM", href: "#" },
-          { name: "TWO STAGE DRUM", href: "#" },
-          { name: "THREE STAGE DRUM", href: "#" },
-          { name: "FOUR STAGE DRUM", href: "#" },
-        ],
-      },
-      {
-        title: "MAGNETIC DESTONER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Drum Separator", href: "#" },
-          { name: "Grate Magnet", href: "#" },
-        ],
-      },
-      {
-        title: "HOPPER MAGNET",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "CIRCULAR MAGNETIC GRILL", href: "#" },
-          { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "PLATE MAGNET",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "this", href: "#" },
-          { name: "this", href: "#" },
-        ],
-      },
-      {
-        title: "HUMP MAGNET",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "This", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "MAGNETIC FILTER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "DRAWER MAGNETIC FILTER", href: "#" },
-          { name: "PIPELINE MAGNETIC FILTER", href: "#" },
-          { name: "BULLET MAGNET", href: "#" },
-        ],
-      },
-      {
-        title: "MAGNETIC DESTONER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "This", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "MAGNETIC HEAD PULLY",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "this", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "COOLANT MAGNETIC SEPERATOR",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "this", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "MAGNETIC SWEEPERS",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "This", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "MAGNETIC ROD",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "This", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "HAND MAGNET",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "This", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-      {
-        title: "ROLLER TYPE MAGNETIC SEPERATOR",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "This", href: "#" },
-          // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
-          // { name: "SQUARE MAGNETIC GRILL", href: "#" },
-        ],
-      },
-    ],
-  },
+        title: "MAGNETIC EQUIPMENTS",
+        groups: [
+          {
+            // subtitle: "PERMENANT SUSPENSION MAGNET",
+            links: [
+              { name: "PERMENANT SUSPENSION MAGNET", href: "#" },
+              { name: "PERMENANT OVERBAND MAGNETIC SEPERAOR", href: "#" },
+              // { name: "PERMENANT DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+ {
+            subtitle: "PERMENANT DRUM MAGNET SEPERATOR",
+            links: [
+              { name: "SINGLE STAGE DRUM MAGNET SEPERATOR", href: "#" },
+              { name: "TWO STAGE DRUM MAGNET SEPERATOR", href: "#" },
+              { name: "THREE STAGE DRUM MAGNET SEPERATOR", href: "#" },
+              { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "MAGNETIC DESTONER",
+            links: [
+              { name: "MAGNETIC DESTONER", href: "#" },
+              // { name: "TWO STAGE DRUM MAGNET SEPERATOR", href: "#" },
+              // { name: "THREE STAGE DRUM MAGNET SEPERATOR", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+           {
+            subtitle: "HOPPER MAGNET",
+            links: [
+              { name: "CIRCULAR MAGNETIC GRILL", href: "#" },
+              { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+              { name: "SQUARE MAGNETIC GRILL", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "PLATE MAGNET",
+            links: [
+              // { name: "CIRCULAR MAGNETIC GRILL", href: "#" },
+              // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+              // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "HUMP MAGNET",
+            links: [
+              // { name: "CIRCULAR MAGNETIC GRILL", href: "#" },
+              // { name: "RECTANGULAR MAGNETIC GRILL", href: "#" },
+              // { name: "SQUARE MAGNETIC GRILL", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "MAGNETIC FILTER",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "MAGNETIC DESTONER",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              // { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              // { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "MAGNETIC HEAD PULLY",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              // { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              // { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "COOLANT MAGNETIC SEPERATOR",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              // { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              // { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "MAGNETIC SWEEPERS",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              // { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              // { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "MAGNETIC ROD",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              // { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              // { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "HAND MAGNET",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              // { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              // { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "ROLLER TYPE MAGNETIC SEPERATOR",
+            links: [
+              { name: "DRAWER MAGNETIC FILTER", href: "#" },
+              // { name: "PIPELINE MAGNETIC FILTER", href: "#" },
+              // { name: "BULLET MAGNET", href: "#" },
+              // { name: "FOUR STAGE DRUM MAGNET SEPERATOR", href: "#" },
+            ],
+          },
 
-  electromagnetic: {
-    label: "ELECTROMAGNETIC EQUIPMENTS",
-    columns: [
+        ],
+        
+      },
       {
-        title: "SUSPENSION ELECRTOMAGNET",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "EM Lifter 1000", href: "#" },
-          { name: "EM Lifter 2000", href: "#" },
+        title: "ELECTROMAGNETIC EQUIPMENTS",
+        groups: [
+          {
+            subtitle: "SUSPENSION ELECRTOMAGNET",
+            links: [
+              { name: "ORANGE COIL METAL DETECTOR", href: "#" },
+              // { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "OVERBAND ELECTROMAGNETIC SEPERATOR",
+            links: [
+              { name: "CONVEYOR TYPE METAL DETECTOR", href: "#" },
+              { name: "GRAVITY FEED METAL DETECTOR", href: "#" },
+              { name: "PIPE LINE METAL DETECTOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "CIRCULAR MAGNETIC LIFTER",
+            links: [
+              { name: "TABLET METAL DETECTOR", href: "#" },
+              
+            ],
+          },
+          
         ],
       },
       {
-        title: "OVERBAND ELECTROMAGNETIC SEPERATOR",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Digital Panel", href: "#" },
-          { name: "Analog Panel", href: "#" },
+        title: "ELECTROPERMENANT MAGNETS",
+        groups: [
+          {
+            subtitle: "ELECTROPERMENANT MAGNETIC LIFTERS",
+            links: [
+              { name: "ORANGE COIL METAL DETECTOR", href: "#" },
+              // { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          
+          
         ],
       },
       {
-        title: "CIRCULAR MAGNETIC LIFTER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Copper Coils", href: "#" },
-          { name: "Cooling Units", href: "#" },
+        title: "MIXING EQUIPMENTS",
+        groups: [
+          {
+            subtitle: "PADDLE MIXER",
+            links: [
+              { name: "SINGLE SHAFT PADDLE MIXER", href: "#" },
+              { name: "TWIN SHAFT PADDLE MIXER", href: "#" },
+            ],
+          },
+          {
+            subtitle: "RIBBON BLENDER",
+            links: [
+              { name: "RIBBON BLENDER", href: "#" },
+              // { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          
+          
+          
         ],
       },
-      // {
-      //   title: "Coils & Spares",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Copper Coils", href: "#" },
-      //     { name: "Cooling Units", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Coils & Spares",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Copper Coils", href: "#" },
-      //     { name: "Cooling Units", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Coils & Spares",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Copper Coils", href: "#" },
-      //     { name: "Cooling Units", href: "#" },
-      //   ],
-      // },
-    ],
-  },
-
-  electroperm: {
-    label: "ELECTROPERMENANT MAGNETS",
-    columns: [
       {
-        title: "ELECTROPERMENANT MAGNETIC LIFTERS",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Lifting Plate", href: "#" },
-          { name: "Block Magnet", href: "#" },
-        ],
-      },
-      // {
-      //   title: "Permanent Magnets",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "NdFeB Magnets", href: "#" },
-      //     { name: "Ferrite Magnets", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Industry Applications",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Fabrication", href: "#" },
-      //     { name: "Automotive", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Industry Applications",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Fabrication", href: "#" },
-      //     { name: "Automotive", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Industry Applications",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Fabrication", href: "#" },
-      //     { name: "Automotive", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Industry Applications",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Fabrication", href: "#" },
-      //     { name: "Automotive", href: "#" },
-      //   ],
-      // },
-    ],
-  },
-
-  vibratory: {
-    label: "VIBRATORY EQUIPMENTS",
-    columns: [
-      {
-        title: "LINEAR VIBRATORY FEEDER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Vibratory Feeder", href: "#" },
-          { name: "Electromagnetic Feeder", href: "#" },
+        title: "VIBRATORY EQUIPMENTS",
+        groups: [
+          {
+            subtitle: "LINEAR VIBRATORY FEEDER",
+            links: [
+              { name: "LINEAR VIBRATORY FEEDER", href: "#" },
+              // { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "VIBRATORY PAN FEEDER",
+            links: [
+              { name: "VIBRATORY PAN FEEDER", href: "#" },
+              // { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "VIBRO SIFTER",
+            links: [
+              { name: "CIRCULAR VIBRATORY SCREEN FOR FOOD INDUSTRY", href: "#" },
+              { name: "CIRCULAR VIBRATORY SCREEN FOR PHARMACUAUTICAL INDUSTRY", href: "#" },
+              { name: "ULTRASONIC VIBRO SIFTER", href: "#" },
+              { name: "BIN ACTIVATOR", href: "#" },
+            ],
+          },
+          {
+            subtitle: "TABLET DEDUSTER",
+            links: [
+              { name: "CIRCULAR VIBRATORY SCREEN FOR FOOD INDUSTRY", href: "#" },
+              // { name: "CIRCULAR VIBRATORY SCREEN FOR PHARMACUAUTICAL INDUSTRY", href: "#" },
+              // { name: "ULTRASONIC VIBRO SIFTER", href: "#" },
+              // { name: "BIN ACTIVATOR", href: "#" },
+            ],
+          },
+          
+          
         ],
       },
       {
         title: "VIBRATORY PAN FEEDER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Vibrating Screen", href: "#" },
-          { name: "Rotary Screen", href: "#" },
-        ],
-      },
-      {
-        title: "VIBRO SIFTER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "FOOD INDUSTRY", href: "#" },
-          { name: "PHARMACUAUTICAL", href: "#" },
-          { name: "ULTRASONIC VIBRO", href: "#" },
-          { name: "BIN ACTIVATOR", href: "#" },
-        ],
-      },
-      {
-        title: "TABLET DEDUSTER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "this", href: "#" },
+        groups: [
+          {
+            subtitle: "LINEAR VIBRATORY FEEDER",
+            links: [
+              { name: "LINEAR VIBRATORY FEEDER", href: "#" },
+              // { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          
           
         ],
       },
-      // {
-      //   title: "Accessories",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Mounts", href: "#" },
-      //     { name: "Controllers", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Accessories",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Mounts", href: "#" },
-      //     { name: "Controllers", href: "#" },
-      //   ],
-      // },
+      {
+        title: "VIBRATORY EQUIPMENTS",
+        groups: [
+          {
+            subtitle: "LINEAR VIBRATORY FEEDER",
+            links: [
+              { name: "LINEAR VIBRATORY FEEDER", href: "#" },
+              // { name: "SIDE WAYS METAL DETECTOR", href: "#" },
+            ],
+          },
+          
+          
+        ],
+      },
     ],
   },
 
-  mixing: {
-    label: "MIXING EQUIPMENTS",
+  industries: {
+    label: "INDUSTRIES",
     columns: [
-      {
-        title: "PADDLE MIXER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "SINGLE SHAFT", href: "#" },
-          { name: "TWIN SHAFT", href: "#" },
-        ],
-      },
-      {
-        title: "RIBBON BLENDER",
-        image: "/categories/tap1.png",
-        links: [
-          { name: "Hoppers", href: "#" },
-          // { name: "Silos", href: "#" },
-        ],
-      },
-      // {
-      //   title: "Services",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Maintenance", href: "#" },
-      //     { name: "Installation", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Services",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Maintenance", href: "#" },
-      //     { name: "Installation", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Services",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Maintenance", href: "#" },
-      //     { name: "Installation", href: "#" },
-      //   ],
-      // },
-      // {
-      //   title: "Services",
-      //   image: "/categories/tap1.png",
-      //   links: [
-      //     { name: "Maintenance", href: "#" },
-      //     { name: "Installation", href: "#" },
-      //   ],
-      // },
+      { title: "Chemical", href: "/chemical" },
+      { title: "Fine Chemicals", href: "/finechemicals" },
+      { title: "Petrochemical", href: "/petrochemical" },
+      { title: "Pharmaceutical", href: "/pharma" },
+      { title: "Cosmetics", href: "/cosmetics" },
+      { title: "Food", href: "/food" },
     ],
+  },
+
+  services: {
+    label: "SERVICES",
+    columns: [
+      { title: "Engineering", href: "/engineering" },
+      { title: "Manufacturing", href: "/manufacturing" },
+      { title: "Quality", href: "/quality" },
+      { title: "After Sales Service", href: "/after-sales" },
+    ],
+  },
+
+  stock: {
+    label: "STOCK EQUIPMENT",
+    labelHref: "/stock-equipments",
+    columns: [],
   },
 };
 
-/* ---------------------------------------------------------
-   ALIGNMENT MAP → Fix cut-off issue
---------------------------------------------------------- */
+/* ================================
+   ALIGNMENT MAP
+================================ */
+
 const alignmentMap: Record<string, "left" | "center" | "right"> = {
-  metal: "left",
-  magnetic: "left",
-  electromagnetic: "center",
-  electroperm: "center",
-  vibratory: "right",
-  mixing: "right",
+  company: "left",
+  equipment: "center",
+  industries: "center",
+  services: "center",
+  stock: "right",
 };
+
+/* ================================
+   COMPONENT
+================================ */
 
 export default function Header() {
-  const [dark, setDark] = useState(false);
   const [mobile, setMobile] = useState(false);
-
+  
   const [activeMega, setActiveMega] = useState<string | null>(null);
+//   useEffect(() => {
+//   if (activeMega === "equipment") {
+//     document.body.style.overflow = "hidden";
+//   } else {
+//     document.body.style.overflow = "auto";
+//   }
+// }, [activeMega]);
 
   return (
     <>
-      {/* HEADER */}
-      <header className="font-heading sticky top-0 z-50 bg-white shadow-md">
-        <div className="container height:200px mx-auto flex items-center justify-between py-6 px-4">
+      <header className="sticky top-0 z-50 bg-white shadow-md">
+        <div className="container mx-auto flex items-center justify-between py-5 px-4">
 
           {/* LOGO */}
-          {/* <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Logo" width={45} height={45} />
-            <span className="font-bold text-xl hidden md:block">Magnetronix</span>
-          </Link> */}
+            <span className="font-bold text-xl hidden md:block">
+              Magnetronix
+            </span>
+          </Link>
+
+          <SearchBar />
 
           {/* DESKTOP NAV */}
-          <nav className="font-menu hidden md:flex gap-8 items-center font-medium font-family: Roboto, sans-serif; line-height: 2.5rem;
-    font-weight: 300; font-semibold ">
+          <nav className="hidden md:flex gap-8 items-center font-medium text-sm tracking-wide">
 
-            <Link href="/" className="hover:text-blue-600">HOME</Link>
+            <Link href="/" className="hover:text-blue-600 transition">
+              HOME
+            </Link>
 
-            {/* LOOP SIX CATEGORIES */}
-            {(Object.keys(menus) as string[]).map((key) => {
-  const menu = menus[key];
-  const isOpen = activeMega === key;
+            {Object.entries(menus).map(([key, menu]) => {
+              const hasDropdown = menu.columns.length > 0;
+              const isOpen = activeMega === key && hasDropdown;
+              const alignment =
+                alignmentMap[key] === "left"
+                  ? "left-0"
+                  : alignmentMap[key] === "right"
+                  ? "right-0"
+                  : "left-1/2 -translate-x-1/2";
 
-  const alignment =
-    alignmentMap[key] === "left"
-      ? "left-0"
-      : alignmentMap[key] === "right"
-      ? "right-0"
-      : "left-1/2 -translate-x-1/2";
+              const isSimpleMenu =
+                menu.columns.length <= 6 &&
+                !menu.columns.some((col) => col.groups || col.links);
 
-  return (
-    <div
-      key={key}
-      className="relative"
-      onMouseEnter={() => setActiveMega(key)}
-      onMouseLeave={() => setActiveMega(null)}
-    >
-      <button className="hover:text-blue-600">
-        {menu.label}
-      </button>
-      
+              return (
+                <div
+                  key={key}
+                  className="relative"
+                  onMouseEnter={() => hasDropdown && setActiveMega(key)}
+                  onMouseLeave={() => hasDropdown && setActiveMega(null)}
+                >
+                  {menu.labelHref ? (
+                    <Link href={menu.labelHref} className="hover:text-blue-600">
+                      {menu.label}
+                    </Link>
+                  ) : (
+                    <button className="hover:text-blue-600">
+                      {menu.label}
+                    </button>
+                  )}
 
-      {isOpen && (
-        <>
-          {/* 👇 Invisible hover bridge */}
-          <div className="absolute left-0 w-full h-6 top-full"></div>
+                  {isOpen && (
+                    <>
+                      <div className="absolute top-full left-0 w-full h-4"></div>
 
-          <div
-  className={`absolute ${alignment} mt-6 top-full 
-              min-w-[800px] max-w-[1200px] overflow-x-auto
-              rounded-lg bg-white shadow-xl z-50 pb-10 pt-5 border`}
->
-
-            <div className="grid grid-cols-3 gap-6 
-                max-h-[60vh] overflow-y-auto 
-                p-5 pr-2 custom-scrollbar max-w-[900px] p-5">
-              {menu.columns.map((col, idx) => (
-                <div key={idx} className="flex gap-4 items-start">
-                  <Image
-                    src={col.image}
-                    width={64}
-                    height={64}
-                    alt={col.title}
-                    className="rounded-md object-contain flex-shrink-0"
-                  />
-                  <div>
-                    <p className="mega-menu-title font-semibold">{col.title}</p>
-                    <div className="flex flex-col mt-2 gap-1">
-                      {col.links.map((l, j) => (
-                        <Link
-                          key={j}
-                          href={l.href}
-                          className="text-sm text-gray-600 hover:text-blue-600"
+                      {isSimpleMenu ? (
+                        /* SIMPLE DROPDOWN */
+                        <div
+                          className={`absolute ${alignment} top-full mt-2 bg-white shadow-xl border rounded-xl py-4 px-6 z-50 w-64`}
                         >
-                          {l.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+                          <div className="flex flex-col space-y-3">
+                            {menu.columns.map((col, idx) => (
+                              <Link
+                                key={idx}
+                                href={col.href || "#"}
+                                className="text-sm hover:text-blue-600 transition"
+                              >
+                                {col.title}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        /* MEGA MENU */
+                        <div
+  className={`absolute ${alignment} top-full mt-2 
+  bg-white 
+  shadow-[0_25px_70px_rgba(0,0,0,0.15)] 
+  border border-gray-100 
+  rounded-2xl 
+  px-14 py-12 
+  z-50 
+  w-[90vw] max-w-[1000px]
+  max-h-[80vh] overflow-y-auto`}
+>
+                          <div className="grid gap-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+
+                            {menu.columns.map((col, idx) => (
+                              <div key={idx} className="space-y-6">
+
+                                <p className="text-lg font-semibold hover:text-blue-600 transition">
+                                  {col.href ? (
+                                    <Link href={col.href}>{col.title}</Link>
+                                  ) : (
+                                    col.title
+                                  )}
+                                </p>
+
+                                {/* GROUPS (multiple subtitles) */}
+                                {col.groups && (
+                                  <div className="space-y-6">
+                                    {col.groups.map((group, gIndex) => (
+                                      <div key={gIndex}>
+                                        <p className="text-xl text-black-700 mb-1 font-medium">
+                                          {group.subtitle}
+                                        </p>
+
+                                        <div className="space-y-2">
+                                          {group.links.map((link, lIndex) => (
+                                            <Link
+                                              key={lIndex}
+                                              href={link.href}
+                                              className="block text-sm text-gray-700 hover:text-blue-600 transition"
+                                            >
+                                              {link.name}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+
+                                {/* SIMPLE LINKS */}
+                                {col.links && (
+                                  <div className="space-y-2">
+                                    {col.links.map((link, lIndex) => (
+                                      <Link
+                                        key={lIndex}
+                                        href={link.href}
+                                        className="block text-sm text-gray-300 hover:text-blue-600 transition"
+                                      >
+                                        {link.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  );
-})}
+              );
+            })}
 
-
-            <Link href="/about" className="hover:text-blue-600">ABOUT</Link>
-            <Link href="/contact" className="hover:text-blue-600">CONTACT</Link>
+            <Link href="/contact" className="hover:text-blue-600 transition">
+              CONTACT
+            </Link>
           </nav>
 
-          {/* DARK MODE + MOBILE ICON */}
-          {/* <div className="hidden md:flex gap-4 items-center text-xl">
-            <button onClick={() => setDark(!dark)}>
-              {dark ? <FaSun /> : <FaMoon />}
-            </button>
-          </div> */}
-
-          <button className="md:hidden text-3xl" onClick={() => setMobile(true)}>
+          <button
+            className="md:hidden text-3xl"
+            onClick={() => setMobile(true)}
+          >
             <GiHamburgerMenu />
           </button>
         </div>
@@ -550,61 +584,88 @@ export default function Header() {
 
       {/* MOBILE MENU */}
       {mobile && (
-        <div
-          className="fixed inset-0 z-50 bg-black/60"
-          onClick={() => setMobile(false)}
-        >
-          <div
-            className="absolute right-0 top-0 w-3/4 bg-white h-full p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="text-3xl mb-6"
-              onClick={() => setMobile(false)}
-            >
-              <IoClose />
-            </button>
+  <div
+    className="fixed inset-0 bg-black/60 z-50"
+    onClick={() => setMobile(false)}
+  >
+    <div
+      className="absolute right-0 top-0 w-4/5 max-w-sm bg-white h-full p-5 overflow-y-auto overflow-x:hidden"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        className="text-2xl mb-6"
+        onClick={() => setMobile(false)}
+      >
+        <IoClose />
+      </button>
 
-            <div className="flex flex-col gap-6 text-lg">
-              <Link href="/">Home</Link>
+      <div className="flex flex-col gap-5 text-sm">
 
-              {/* MOBILE DROPDOWNS */}
-              {(Object.keys(menus) as string[]).map((key) => {
-                const menu = menus[key];
-                return (
-                  <details key={key} className="border-b pb-2">
-                    <summary className="cursor-pointer font-medium">{menu.label}</summary>
+        <Link href="/" className="font-semibold text-sm">
+          Home
+        </Link>
 
-                    <div className="mt-2 ml-4">
-                      {menu.columns.map((col, idx) => (
-                        <div key={idx} className="mb-3">
-                          <p className="font-semibold">{col.title}</p>
-                          {col.links.map((l, j) => (
-                            <Link key={j} href={l.href} className="block text-sm mt-1">
-                              {l.name}
-                            </Link>
-                          ))}
-                        </div>
+        {Object.entries(menus).map(([key, menu]) => (
+          <details key={key} className="border-b pb-3">
+            <summary className="cursor-pointer font-semibold text-sm">
+              {menu.label}
+            </summary>
+
+            <div className="mt-3 ml-3 space-y-3">
+
+              {menu.columns.map((col, idx) => (
+                <div key={idx}>
+
+                  <p className="text-sm font-medium text-gray-800">
+                    {col.title}
+                  </p>
+
+                  {col.groups?.map((group, gIndex) => (
+                    <div key={gIndex} className="ml-2 mt-2 space-y-1">
+
+                      {group.subtitle && (
+                        <p className="text-xs text-gray-500">
+                          {group.subtitle}
+                        </p>
+                      )}
+
+                      {group.links.map((link, lIndex) => (
+                        <Link
+                          key={lIndex}
+                          href={link.href}
+                          className="block text-xs text-gray-600 ml-2"
+                        >
+                          {link.name}
+                        </Link>
                       ))}
                     </div>
-                  </details>
-                );
-              })}
+                  ))}
 
-              <Link href="/about">About</Link>
-              <Link href="/contact">Contact</Link>
+                  {col.links?.map((link, lIndex) => (
+                    <Link
+                      key={lIndex}
+                      href={link.href}
+                      className="block text-xs text-gray-600 ml-2"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
 
-              <button
-                onClick={() => setDark(!dark)}
-                className="mt-4 flex items-center gap-3"
-              >
-                {dark ? <FaSun /> : <FaMoon />}
-                {dark ? "Light Mode" : "Dark Mode"}
-              </button>
+                </div>
+              ))}
+
             </div>
-          </div>
-        </div>
-      )}
+          </details>
+        ))}
+
+        <Link href="/contact" className="font-semibold text-sm">
+          Contact
+        </Link>
+
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }

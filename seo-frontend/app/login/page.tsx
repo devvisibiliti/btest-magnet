@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import type { ChangeEvent, FormEvent } from "react";
 
 interface LoginForm {
@@ -9,6 +10,7 @@ interface LoginForm {
 }
 
 function Login() {
+  const router = useRouter()
   const [form, setForm] = useState<LoginForm>({ email: "", password: "" });
   const [message, setMessage] = useState<string>("");
 
@@ -37,6 +39,8 @@ function Login() {
 
       localStorage.setItem("user", JSON.stringify(data.log));
       setMessage("Login successful");
+      router.push("/admin/products/list")
+
       
     } catch (err) {
       console.error(err);
@@ -101,13 +105,13 @@ function Login() {
             }`}
           >
             {message}
-            const 
+            
           </p>
         )}
 
         {/* Footer */}
         <p className="mt-6 text-center text-sm text-gray-500">
-          © 2025 Magnetronix. All rights reserved.
+          © 2026 Magnetronix. All rights reserved.
         </p>
       </div>
     </div>

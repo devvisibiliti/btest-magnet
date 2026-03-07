@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
+import {useRouter} from "next/navigation"
 import Link from "next/link";
 
 export default function AdminProductList() {
   const [products, setProducts] = useState([]);
+  const router = useRouter()
 
   const fetchProducts = async () => {
     const res = await fetch("http://localhost:5300/api/products");
@@ -40,7 +42,11 @@ console.log(products);
 
   return (
     <div className="admin-container">
-      <h1 className="admin-title">Product List</h1>
+     <div className="container flex gap-20">
+  <h1 className="admin-title">Product List</h1>
+  <button className="edit-btn mb-10"onClick={()=>router.push("/admin/products/add")}>Add New Product</button>
+</div>
+      
 
       <div className="table-wrapper">
         <table className="admin-table">

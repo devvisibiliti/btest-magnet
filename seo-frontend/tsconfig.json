@@ -30,6 +30,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "app/admin/products/view/[id]/page.js"
-  ],
+, "app/components/ProductPanel.jsx"  ],
   "exclude": ["node_modules"]
 }
