@@ -67,6 +67,7 @@
 // this is product merge also blog code
 import dotenv from "dotenv";
 dotenv.config();
+console.log("PUBLIC KEY:", process.env.IMAGEKIT_PUBLIC_KEY)
 
 // console.log("CLOUDINARY ENV LOADED:", {
 //   NAME: process.env.CLOUDINARY_NAME,

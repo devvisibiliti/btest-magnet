@@ -34,18 +34,23 @@ export default function ProductPanel() {
 const handleImageUpload = async (e) => {
 
   const imageFile = e.target.files[0]
-  if (!imageFile) return
+  console.log("FILE SELECTED:", imageFile)
 
-  setAltImage(imageFile.name)
+  if (!imageFile) return
 
   const formData = new FormData()
   formData.append("file", imageFile)
 
   try {
+
+    console.log("SENDING IMAGE...")
+
     const response = await fetch("http://localhost:5300/api/uploadimage", {
       method: "POST",
       body: formData
     })
+
+    console.log("UPLOAD STATUS:", response.status)
 
     const data = await response.json()
     console.log("UPLOAD RESPONSE:", data)
@@ -53,7 +58,7 @@ const handleImageUpload = async (e) => {
     setImageUrl(data.url)
 
   } catch (error) {
-    console.error("Upload failed", error)
+    console.error("UPLOAD ERROR:", error)
   }
 }
   const handleTitle =(html)=>{
