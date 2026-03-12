@@ -88,8 +88,9 @@ import adRouter from "./routes/adRoutes.js";
 // NEW PRODUCT ROUTES
 import productsRoutes from "./routes/products.js";
 import categoriesRoutes from "./routes/categories.js";
-import uploadRoutes from "./routes/upload.js";
-import uploadImage from "./routes/uploadRoute.js"
+// import uploadRoutes from "./routes/upload.js";
+import uploadImage from "./routes/uploadImage.js"
+import SingleProduct from "./routes/singleProduct.js"
 
 const app = express();
 
@@ -124,8 +125,9 @@ app.use("/ad", adRouter);
 // NEW PRODUCT ROUTES
 app.use("/api/products", productsRoutes);
 app.use("/api/categories", categoriesRoutes);
-app.use("/api/upload", uploadRoutes);
-app.use("/api/uploadimage", uploadImage)
+// app.use("/api/upload", uploadRoutes);
+app.use("/api/uploadimage", uploadImage);
+app.use("/api/singleproduct",SingleProduct);
 
 // Health route
 app.get("/health", (req, res) => res.json({ ok: true }));

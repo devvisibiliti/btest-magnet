@@ -31,7 +31,7 @@ export default function ProductPanel() {
 
   }
 
-  const handleImageUpload = async (e) => {
+const handleImageUpload = async (e) => {
 
   const imageFile = e.target.files[0]
   if (!imageFile) return
@@ -42,12 +42,13 @@ export default function ProductPanel() {
   formData.append("file", imageFile)
 
   try {
-    const response = await fetch("/api/uploadimage", {
+    const response = await fetch("http://localhost:5300/api/uploadimage", {
       method: "POST",
       body: formData
     })
 
     const data = await response.json()
+    console.log("UPLOAD RESPONSE:", data)
 
     setImageUrl(data.url)
 
@@ -90,13 +91,15 @@ export default function ProductPanel() {
     setEquipmentStock(html)
   }
 
+  const API_URL = "http://localhost:5300"
+
   const onSubmit = async (e) => {
     e.preventDefault()
 
     const data = {
       slug:slug,
-      title:title,
       imageUrl:imageUrl,
+      title:title,
       altImage:altImage,
       mainDescription:mainDescription,
       advantages: bulletPointValue.advantage,
@@ -105,9 +108,10 @@ export default function ProductPanel() {
       description: descriptionValue,
       stock: equipmentStock
     }
+    console.log("DATA SENDING:", data)
 
     try{
-      const res = await fetch("/api/singleproduct",{
+      const res = await fetch(`${API_URL}/api/singleproduct`,{
         method:"POST",
         body:JSON.stringify(data),
         headers: {
@@ -115,9 +119,11 @@ export default function ProductPanel() {
 }
       })
       const productValue = await res.json()
+      console.log(productValue)
 
 
     }catch(error){
+      console.log(error)
 
     }
 
