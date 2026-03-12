@@ -90,7 +90,7 @@ export default function ProductPanel() {
     setEquipmentStock(html)
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     const data = {
@@ -106,7 +106,22 @@ export default function ProductPanel() {
       stock: equipmentStock
     }
 
-    console.log("Submitted Data:", data)
+    try{
+      const res = await fetch("/api/singleproduct",{
+        method:"POST",
+        body:JSON.stringify(data),
+        headers: {
+  "Content-Type": "application/json"
+}
+      })
+      const productValue = await res.json()
+
+
+    }catch(error){
+
+    }
+
+    // console.log("Submitted Data:", data)
   }
 
   return (
