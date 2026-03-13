@@ -2,10 +2,9 @@ import mongoose from "mongoose"
 
 
 const SingleProductSchema = new mongoose.Schema({
-  slug: { type: String, required: true },
+  slug: { type: String, required: true, unique:true },
   imageUrl: { type: String, required: true },
   title: { type: String, required: true },
-  altImage: { type: String, required: true },
   mainDescription: { type: String, required: true },
   advantages: [{ type: String, required: true }],
   features: [{ type: String, required: true }],

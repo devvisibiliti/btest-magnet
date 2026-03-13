@@ -20,21 +20,29 @@ const SingleProductSave = async (req, res) => {
   !slug ||
   !imageUrl||
   !title ||
-  !altImage ||
   !mainDescription ||
-  !advantages ||
-  !features ||
-  !options ||
+  !advantages?.length ||
+  !features?.length ||
+  !options?.length ||
   !description ||
   !stock
 ) {
   return res.status(400).json({ message: "Give all required fields" });
 }
 
+const cleanTitle = title?.replace(/<[^>]*>?/gm, '');
+
+const existSlug = await SingleProductDB.findOne({slug})
+
+if(existSlug){
+  res.status(400).json({message:"slug already existing"})
+
+}
+
     await SingleProductDB.create({
   slug,
   imageUrl,
-  title,
+  title:cleanTitle,
   altImage,
   mainDescription,
   advantages,

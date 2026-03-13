@@ -92,6 +92,7 @@ import categoriesRoutes from "./routes/categories.js";
 // import uploadRoutes from "./routes/upload.js";
 import uploadImage from "./routes/uploadImage.js"
 import SingleProduct from "./routes/singleProduct.js"
+import getProducts from "./routes/getProducts.js"
 
 const app = express();
 
@@ -129,6 +130,8 @@ app.use("/api/categories", categoriesRoutes);
 // app.use("/api/upload", uploadRoutes);
 app.use("/api/uploadimage", uploadImage);
 app.use("/api/singleproduct",SingleProduct);
+app.use("/api/getproducts",getProducts);
+
 
 // Health route
 app.get("/health", (req, res) => res.json({ ok: true }));
