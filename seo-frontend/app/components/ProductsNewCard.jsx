@@ -1,40 +1,28 @@
+import Link from "next/link";
 import Image from "next/image";
 
 export default function ProductsNewCard({ product }) {
   return (
-    <div
-      style={{
-        border: "1px solid #ddd",
-        padding: "15px",
-        borderRadius: "8px",
-        textAlign: "center",
-        background: "#fff"
-      }}
-    >
+    <div className="border rounded-lg p-4 text-center bg-white shadow-sm">
+
       <Image
-  src={product.image}
-  width={300}
-  height={200}
-  alt={product.title}
-  style={{ objectFit: "cover", width: "100%", height: "200px" }}
-/>
+        src={product.imageUrl}
+        width={300}
+        height={200}
+        alt={product.title}
+        className="w-full h-[200px] object-cover rounded"
+      />
 
-      <h3>{product.title}</h3>
+      <h3 className="mt-4 font-semibold text-lg">
+        {product.title}
+      </h3>
 
-      <p>{product.description.substring(0, 40)}...</p>
+      <Link href={`/products/${product.slug}`}>
+        <button className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded">
+          View Product
+        </button>
+      </Link>
 
-      <button
-        style={{
-          padding: "8px 12px",
-          background: "black",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}
-      >
-        View Product
-      </button>
     </div>
   );
 }
