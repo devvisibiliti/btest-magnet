@@ -4,8 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function ProductDetails({ product }) {
+  console.log(product);
   return (
+
+    <>
+    
     <div className="max-w-7xl mx-auto px-6 py-16">
+     
 
       {/* HERO SECTION */}
 
@@ -14,13 +19,15 @@ export default function ProductDetails({ product }) {
         {/* IMAGE */}
 
         <div className="flex justify-center">
-          <Image
-            src={product.imageUrl}
+         {product.imageUrl && (
+           <Image
+            src={product.imageUrl || "/no-image.png"}
             width={500}
             height={500}
             alt={product.title}
             className="rounded-lg object-contain"
           />
+         )}
         </div>
 
         {/* TEXT */}
@@ -61,11 +68,28 @@ export default function ProductDetails({ product }) {
 
         <Accordion title="Features" items={product.features} />
 
-        <Accordion title="Options" items={product.options} />
+        <Accordion title="Typical Application" items={product.options} />
+        
 
       </div>
+      {/* <div
+        className="mt-16 text-gray-700 leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: product.stock }}
+      /> */}
+      <div className="flex justify-center mt-10">
+  <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded">
+    Request a Quote
+  </button>
+</div>
 
     </div>
+    
+      
+    
+    
+    </>
+    
+    
   );
 }
 
@@ -92,12 +116,11 @@ function Accordion({ title, items }) {
         <div className="px-6 pb-6">
 
           <ul className="list-disc space-y-2 text-gray-700">
-
-            {items.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-
-          </ul>
+  {Array.isArray(items) &&
+    items.map((item, index) => (
+      <li key={index}>{item}</li>
+    ))}
+</ul>
 
         </div>
       )}

@@ -1,20 +1,24 @@
-import ProductDetails from "@/components/ProductDetails";
+import ProductDetails from "../../components/SingleProductCard";
 
 async function getProduct(slug) {
 
   const res = await fetch(
-    `http://localhost:5300/api/products/${slug}`,
+    `http://localhost:5300/api/singleproduct/${slug}`,
     { cache: "no-store" }
   );
 
-  const data = await res.json();
+  if (!res.ok) {
+    throw new Error("Failed to fetch product");
+  }
 
-  return data;
+  return res.json();
 }
 
 export default async function ProductPage({ params }) {
 
-  const product = await getProduct(params.slug);
+  const { slug } = await params;
+
+  const product = await getProduct(slug);
 
   return <ProductDetails product={product} />;
 }

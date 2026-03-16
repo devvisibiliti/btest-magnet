@@ -1,6 +1,6 @@
 import SingleProductDB from "../models/SingleProduct.js";
 
-const SingleProductSave = async (req, res) => {
+export const SingleProductSave = async (req, res) => {
   try {
     console.log("REQ BODY:", req.body)
     const {
@@ -35,7 +35,7 @@ const cleanTitle = title?.replace(/<[^>]*>?/gm, '');
 const existSlug = await SingleProductDB.findOne({slug})
 
 if(existSlug){
-  res.status(400).json({message:"slug already existing"})
+  return res.status(400).json({message:"slug already existing"})
 
 }
 
@@ -59,4 +59,22 @@ if(existSlug){
   }
 };
 
-export default SingleProductSave;
+
+
+export const SingleProductGet = async (req, res)=>{
+  try{
+    const {slug} = req.params
+  if(!slug){
+    return res.status(400).json({message:"slug is not correct or not available"})
+  }
+  const singleProduct = await SingleProductDB.findOne({slug})
+  if (!singleProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+  res.status(200).json(singleProduct)
+
+  }catch(error){
+    res.status(500).json({message:error.message})
+  }
+
+}
