@@ -126,7 +126,7 @@ const handleImageUpload = async (e) => {
       const productValue = await res.json()
       console.log(productValue)
       alert("Product Added Successfully")
-      resetForm()
+      // resetForm()
 
 
     }catch(error){
@@ -134,20 +134,20 @@ const handleImageUpload = async (e) => {
 
     }
 
-    const resetForm = () => {
-  setSlug("")
-  setImageUrl("")
-  setAltImage("")
-  setTitle("")
-  setMainDescription("")
-  setBulletPointValue({
-    advantage: [""],
-    features: [""],
-    options: [""]
-  })
-  setDescriptionValue("")
-  setEquipmentStock("")
-}
+//     const resetForm = () => {
+//   setSlug("")
+//   setImageUrl("")
+//   setAltImage("")
+//   setTitle("")
+//   setMainDescription("")
+//   setBulletPointValue({
+//     advantage: [""],
+//     features: [""],
+//     options: [""]
+//   })
+//   setDescriptionValue("")
+//   setEquipmentStock("")
+// }
 
     // console.log("Submitted Data:", data)
   }
@@ -261,7 +261,7 @@ const handleImageUpload = async (e) => {
 
 
         {/* STOCK */}
-        {/* <section>
+        <section>
           <h3 className="text-lg font-semibold mb-3">Equipment Stock</h3>
 
           <TiptapEditor
@@ -270,7 +270,7 @@ const handleImageUpload = async (e) => {
             onChange={handleEquipmentStock}
             // className="w-full border border-gray-300 rounded p-2"
           />
-        </section> */}
+        </section>
 
 
         {/* SUBMIT */}
